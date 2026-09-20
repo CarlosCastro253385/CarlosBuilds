@@ -79,5 +79,6 @@ Una vez configurado, cada vez que hagas cambios en tu proyecto solo tendrás que
 git add .
 git commit -m "mensaje de los cambios realizados"
 git push origin main
+```
 
 ---
