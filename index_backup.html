@@ -6,12 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CarlosBuilds — Mini proyectos y problemas reales</title>
   
-  <!-- Fuentes Google: JetBrains Mono (estilo terminal) e Inter (lectura limpia) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   
-  <!-- Tailwind CSS CDN para estilos rápidos -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <script>
@@ -39,7 +37,6 @@
   </script>
 
   <style>
-    /* Fondo con cuadrícula técnica sutil */
     body {
       background-color: #050810;
       background-image: 
@@ -49,7 +46,6 @@
       background-size: 100% 100%, 32px 32px, 32px 32px;
     }
 
-    /* Animación del cursor titilante */
     .blink-cursor {
       animation: blink 1s step-start infinite;
     }
@@ -61,16 +57,13 @@
 
 <body class="font-sans text-brand-text min-h-screen antialiased selection:bg-brand-cyan selection:text-black">
 
-  <!-- ==================== ENCABEZADO (SIN MENÚS) ==================== -->
   <header class="border-b border-brand-border/60 bg-brand-bg/80 backdrop-blur-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between text-sm">
       
-      <!-- BRANDING / NOMBRE -->
       <a href="#" class="font-mono text-brand-heading hover:text-brand-cyan transition-colors flex items-center gap-2">
         <span class="text-brand-cyan">&gt;</span> CarlosBuilds<span class="inline-block w-2 h-4 bg-brand-cyan blink-cursor"></span>
       </a>
 
-      <!-- INDICADOR DISPONIBLE -->
       <div class="flex items-center gap-2 font-mono text-xs text-emerald-400 bg-emerald-950/40 border border-emerald-800/50 px-2.5 py-1 rounded-full">
         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
         Disponible para proyectos
@@ -79,10 +72,8 @@
     </div>
   </header>
 
-  <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
   <main class="max-w-6xl mx-auto px-4 py-12">
 
-    <!-- HERO SECTION -->
     <section class="mb-12">
       <div class="font-mono text-xs text-brand-cyan mb-3 flex items-center gap-2">
         <span>~ / CarlosBuilds / blog</span>
@@ -96,7 +87,6 @@
         Escribo sobre lo que construyo y lo que rompo. Backend, herramientas de línea de comandos, bases de datos y los errores que nadie documenta bien.
       </p>
 
-      <!-- DATOS DINÁMICOS -->
       <div class="font-mono text-xs text-slate-500 flex items-center gap-4">
         <span><strong id="total-posts-count" class="text-brand-heading">0</strong> posts publicados</span>
         <span>•</span>
@@ -104,13 +94,10 @@
       </div>
     </section>
 
-    <!-- GRID PRINCIPAL (ARTÍCULOS + LATERAL) -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-      <!-- COLUMNA IZQUIERDA: FILTROS Y LISTA DE ARTÍCULOS (8 COLS) -->
       <div class="lg:col-span-8">
 
-        <!-- FILTROS POR CATEGORÍA -->
         <div class="flex flex-wrap gap-2 mb-8 font-mono text-xs" id="filter-buttons">
           <button data-filter="TODOS" class="filter-btn active bg-brand-cyan text-black px-3 py-1.5 rounded font-semibold transition-all">
             TODOS
@@ -123,17 +110,13 @@
           </button>
         </div>
 
-        <!-- CONTENEDOR DE TARJETAS -->
         <div class="space-y-4" id="posts-container">
-          <!-- Se renderizan dinámicamente con JavaScript -->
         </div>
 
       </div>
 
-      <!-- COLUMNA DERECHA: SIDEBAR (4 COLS) -->
       <aside class="lg:col-span-4 space-y-6">
 
-        <!-- WIDGET 1: SOBRE MÍ -->
         <div class="bg-brand-card border border-brand-border/80 rounded-lg p-5">
           <div class="font-mono text-xs text-brand-cyan mb-2">// SOBRE MI</div>
           <p class="text-xs text-brand-text leading-relaxed mb-4">
@@ -145,15 +128,12 @@
           </div>
         </div>
 
-        <!-- WIDGET 2: TAGS -->
         <div class="bg-brand-card border border-brand-border/80 rounded-lg p-5">
           <div class="font-mono text-xs text-brand-cyan mb-3">// TAGS</div>
           <div class="flex flex-wrap gap-1.5 font-mono text-[11px]" id="tags-container">
-            <!-- Se renderizan automáticamente -->
           </div>
         </div>
 
-        <!-- WIDGET 3: STATS AUTOMÁTICAS -->
         <div class="bg-brand-card border border-brand-border/80 rounded-lg p-5 font-mono text-xs space-y-2">
           <div class="text-brand-cyan mb-3">// STATS</div>
           <div class="flex justify-between text-slate-400">
@@ -176,16 +156,12 @@
 
   </main>
 
-  <!-- ==================== FOOTER ==================== -->
   <footer class="border-t border-brand-border/60 mt-20 py-8 text-center font-mono text-xs text-slate-600">
     <p>© 2026 CarlosBuilds · El hombre aprende mientras vive · sin cookies, sin trackers</p>
   </footer>
 
 
-  <!-- ==================== JAVASCRIPT (LÓGICA Y DATOS) ==================== -->
   <script>
-    // DATOS DE LOS ARTÍCULOS
-    // DATOS DE LOS ARTÍCULOS
     const posts = [
       {
         id: 1,
@@ -242,7 +218,6 @@
     let currentFilter = 'TODOS';
     let selectedTag = null;
 
-    // RENDERIZAR ARTÍCULOS
     function renderPosts() {
       const container = document.getElementById('posts-container');
       container.innerHTML = '';
@@ -293,7 +268,6 @@
       });
     }
 
-    // CALCULAR Y MOSTRAR ESTADÍSTICAS AUTOMÁTICAS
     function updateStats() {
       const totalPosts = posts.length;
       const totalViews = posts.reduce((sum, p) => sum + p.views, 0);
@@ -309,7 +283,6 @@
       document.getElementById('stat-problems-solved').innerText = problemsSolved;
       document.getElementById('stat-tags-count').innerText = allTags.size;
 
-      // Renderizar tags en sidebar
       const tagsContainer = document.getElementById('tags-container');
       tagsContainer.innerHTML = '';
       allTags.forEach(tag => {
@@ -325,7 +298,6 @@
       });
     }
 
-    // EVENTOS DE BOTONES DE FILTRO
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         document.querySelectorAll('.filter-btn').forEach(b => {
@@ -337,7 +309,6 @@
       });
     });
 
-    // INICIALIZACIÓN
     updateStats();
     renderPosts();
   </script>
