@@ -1,0 +1,21 @@
+backend:
+  name: github
+  repo: CarlosCastro253385/CarlosBuilds
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "blog"
+    label: "Blog Posts"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Categoría", name: "category", widget: "select", options: ["MINI-PROYECTO", "PROBLEMA-RESUELTO"] }
+      - { label: "Resumen", name: "summary", widget: "text" }
+      - { label: "Fecha", name: "date", widget: "string" }
+      - { label: "Etiquetas", name: "tags", widget: "list" }
+      - { label: "Contenido", name: "body", widget: "markdown" }

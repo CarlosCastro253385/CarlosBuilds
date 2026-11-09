@@ -146,17 +146,9 @@ declare module 'astro:content' {
   slug: "como-subir-tu-proyecto-a-github";
   body: string;
   collection: "blog";
-  data: any
+  data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
 };
-"blogs": Record<string, {
-  id: string;
-  slug: string;
-  body: string;
-  collection: "blogs";
-  data: any;
-  render(): Render[".md"];
-}>;
 
 	};
 
@@ -166,5 +158,5 @@ declare module 'astro:content' {
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;
 
-	export type ContentConfig = never;
+	export type ContentConfig = typeof import("./../../src/content/config.js");
 }
