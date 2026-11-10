@@ -3,10 +3,62 @@ backend:
   repo: CarlosCastro253385/CarlosBuilds
   branch: main
 
-media_folder: "public/images/uploads"
-public_folder: "/images/uploads"
+media_folder: "public/imagenes"
+public_folder: "/imagenes"
 
 collections:
+  - name: "landing_settings"
+    label: "Landing Page"
+    delete: false
+    files:
+      - file: "src/content/landing/index.json"
+        label: "Contenido de la Landing Page"
+        name: "landing_content"
+        extension: "json"
+        format: "json"
+        fields:
+          - { label: "Subtítulo Hero", name: "hero_sub", widget: "string" }
+          - { label: "Título Hero", name: "hero_titulo", widget: "string" }
+          - { label: "Descripción Hero", name: "hero_descripcion", widget: "text" }
+          - { label: "Foto de Perfil", name: "perfil_img", widget: "image" }
+          
+          - label: "Lenguajes de Programación"
+            name: "tech_stack"
+            widget: "list"
+            fields:
+              - { label: "Nombre", name: "name", widget: "string" }
+              - { label: "Icono", name: "icon", widget: "image" }
+
+          - label: "Mis Proyectos"
+            name: "proyectos"
+            widget: "list"
+            fields:
+              - { label: "Etiqueta Destacada (Opcional)", name: "badge", widget: "string", required: false }
+              - { label: "Título del Proyecto", name: "titulo", widget: "string" }
+              - { label: "Descripción", name: "descripcion", widget: "text" }
+              - { label: "Tecnologías", name: "tecnologias", widget: "list" }
+
+          - label: "Trayectoria Académica"
+            name: "eventos"
+            widget: "list"
+            fields:
+              - { label: "Etiqueta (ej: Actualidad)", name: "tag", widget: "string" }
+              - { label: "Título", name: "titulo", widget: "string" }
+              - { label: "Descripción", name: "descripcion", widget: "text" }
+              - { label: "Imagen URL", name: "imagen", widget: "string" }
+
+          - label: "Certificaciones"
+            name: "certifications"
+            widget: "list"
+            fields:
+              - { label: "Título", name: "title", widget: "string" }
+              - { label: "Emisor", name: "issuer", widget: "string" }
+              - { label: "Año", name: "year", widget: "string" }
+
+          - { label: "Email de Contacto", name: "contacto_email", widget: "string" }
+          - { label: "URL de GitHub", name: "github_url", widget: "string" }
+          - { label: "URL de Instagram", name: "instagram_url", widget: "string" }
+
   - name: "blog"
     label: "Blog Posts"
     folder: "src/content/blog"
@@ -17,5 +69,8 @@ collections:
       - { label: "Categoría", name: "category", widget: "select", options: ["MINI-PROYECTO", "PROBLEMA-RESUELTO"] }
       - { label: "Resumen", name: "summary", widget: "text" }
       - { label: "Fecha", name: "date", widget: "string" }
-      - { label: "Etiquetas", name: "tags", widget: "list" }
+      - label: "Etiquetas"
+        name: "tags"
+        widget: "list"
+        field: { label: "Etiqueta", name: "tag", widget: "string" }
       - { label: "Contenido", name: "body", widget: "markdown" }

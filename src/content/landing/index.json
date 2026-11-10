@@ -1,0 +1,55 @@
+{
+  "hero_sub": "Hola, soy Carlos Cruz Castro",
+  "hero_titulo": "Conóceme.",
+  "hero_descripcion": "Soy Estudiante de la Universidad Politécnica de Chiapas, especializándome en Ingeniería en Tecnologías de la Información e Innovación Digital.",
+  "perfil_img": "/imagenes/yo.jpg",
+  "tech_stack": [
+    { "name": "Java", "icon": "/imagenes/java.jpg" },
+    { "name": "C++", "icon": "/imagenes/c.jpg" },
+    { "name": "Bash / Shell", "icon": "/imagenes/bash.png" },
+    { "name": "Python", "icon": "/imagenes/python.png" },
+    { "name": "CSS", "icon": "/imagenes/css.png" },
+    { "name": "HTML", "icon": "/imagenes/html5.png" }
+  ],
+  "proyectos": [
+    {
+      "badge": "★ Proyecto Integrador",
+      "titulo": "PawCare",
+      "descripcion": "Plataforma integral orientada al cuidado, gestión e historial médico de mascotas. Diseñada para facilitar el seguimiento de vacunas, citas y bienestar general enfocado en un Refugio para Animales.",
+      "tecnologias": ["Java / Backend", "Base de Datos", "HTML & CSS"]
+    },
+    {
+      "badge": "",
+      "titulo": "Página de Seguimiento de Ahorro",
+      "descripcion": "Página encargada de llevar un registro sobre tus ahorros y llevar un control de cuánto necesitas ahorrar hasta alcanzar una meta fija.",
+      "tecnologias": ["CSS", "HTML", "AWS"]
+    },
+    {
+      "badge": "",
+      "titulo": "Evaluador de Software",
+      "descripcion": "Página dedicada a programadores encargada de calificar el rendimiento y métricas de un software.",
+      "tecnologias": ["C++", "HTML", "CSS"]
+    }
+  ],
+  "eventos": [
+    {
+      "tag": "Actualidad",
+      "titulo": "Formación en Ingeniería",
+      "descripcion": "Estudiante activo de Ingeniería en Tecnologías de la Información e Innovación Digital. Construyendo bases sólidas en programación, estructuras de datos y lógica de algoritmos.",
+      "imagen": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+      "tag": "Autónomo",
+      "titulo": "Proyectos Escolares y Práctica",
+      "descripcion": "Aplicación de conceptos teóricos mediante la creación de mini-proyectos y prácticas enfocadas en desarrollo backend y frontend.",
+      "imagen": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+    }
+  ],
+  "certifications": [
+    { "title": "Cloud Foundations", "issuer": "Amazon Web Services (AWS)", "year": "2025" },
+    { "title": "Soporte de sistemas operativos", "issuer": "Cisco Networking Academy", "year": "2026" }
+  ],
+  "contacto_email": "cruzcastro4@gmail.com",
+  "github_url": "https://github.com/CarlosCastro253385",
+  "instagram_url": "https://instagram.com/slrc_ttr"
+}

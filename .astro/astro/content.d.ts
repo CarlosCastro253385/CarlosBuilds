@@ -153,7 +153,14 @@ declare module 'astro:content' {
 	};
 
 	type DataEntryMap = {
-		
+		"landing": {
+"index": {
+	id: "index";
+  collection: "landing";
+  data: InferEntrySchema<"landing">
+};
+};
+
 	};
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;

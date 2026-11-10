@@ -1,409 +1,136 @@
 ---
-import { getCollection } from 'astro:content';
-import '../styles/global.css';
+import { getEntry } from 'astro:content';
+import '../styles/landing.css';
 
-// Obtener todos los posts desde src/content/blog/
-const posts = await getCollection('blog');
-
-// Calcular estadísticas reales iniciales
-const totalPosts = posts.length;
-const miniProjectsCount = posts.filter(p => p.data.category === 'MINI-PROYECTO').length;
-const problemsSolvedCount = posts.filter(p => p.data.category === 'PROBLEMA-RESUELTO').length;
-
-// Extraer todos los tags únicos de la lista de posts
-const allTags = Array.from(
-  new Set(posts.flatMap(post => post.data.tags || []))
-);
-
-// Tu correo de contacto
-const contactEmail = 'cruzcastro4@gmail.com';
-
-// Definición de Lenguajes de Programación
-const techStack = [
-  { name: 'Java', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg' },
-  { name: 'C++', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg' },
-  { name: 'Bash / Shell Scripting', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg' },
-  { name: 'Python', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
-  { name: 'CSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
-  { name: 'HTML', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' }
-];
-
-// Definición de Certificaciones
-const certifications = [
-  {
-    title: 'Cloud Foundations',
-    issuer: 'Amazon Web Services (AWS)',
-    year: '2025'
-  },
-  {
-    title: 'Soporte de sistemas operativos',
-    issuer: 'Cisco Networking Academy',
-    year: '2026'
-  }
-];
+// Cargar los datos dinámicos administrados por Decap CMS
+const landingEntry = await getEntry('landing', 'index');
+const data = landingEntry.data;
 ---
 
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CarlosBuilds — Mini proyectos y problemas reales</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-
-  <style>
-    body {
-      background-color: #050810;
-      background-image: 
-        radial-gradient(circle at 50% 0%, rgba(0, 242, 254, 0.08) 0%, transparent 60%),
-        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 100% 100%, 32px 32px, 32px 32px;
-    }
-
-    .blink-cursor {
-      animation: blink 1s step-start infinite;
-    }
-    @keyframes blink {
-      50% { opacity: 0; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carlos Armando Cruz Castro | Ingeniero en IT</title>
 </head>
+<body>
 
-<body class="font-sans text-slate-400 min-h-screen antialiased selection:bg-cyan-400 selection:text-black">
+    <header>
+        <nav class="nav-container">
+            <a href="/" class="logo">Carlos<span>Castro</span></a>
+            <ul class="nav-links">
+                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="/blog">Blog</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <!-- ENCABEZADO -->
-  <header class="border-b border-slate-800/60 bg-[#050810]/80 backdrop-blur-md sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between text-sm">
-      <a href="/" class="font-mono text-slate-100 hover:text-cyan-400 transition-colors flex items-center gap-2">
-        <span class="text-cyan-400">&gt;</span> CarlosBuilds<span class="inline-block w-2 h-4 bg-cyan-400 blink-cursor"></span>
-      </a>
-
-      <div class="flex items-center gap-3 font-mono text-xs">
-        <!-- BOTÓN COPIAR EMAIL -->
-        <button 
-          id="copy-email-btn"
-          data-email={contactEmail}
-          class="flex items-center gap-2 bg-[#0b1120] text-slate-300 hover:text-cyan-400 border border-slate-800 hover:border-cyan-400/50 px-3 py-1.5 rounded transition-all cursor-pointer"
-        >
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-          </svg>
-          <span id="email-btn-text">Copiar Email</span>
-        </button>
-
-        <div class="hidden sm:flex items-center gap-2 text-emerald-400 bg-emerald-950/40 border border-emerald-800/50 px-2.5 py-1 rounded-full">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          Disponible
+    <!-- SOBRE MÍ / HERO -->
+    <section id="sobre-mi">
+        <div class="sobre-mi-container">
+            <div class="sobre-mi-texto">
+                <p class="hero-sub">{data.hero_sub}</p>
+                <h1 class="hero-titulo">{data.hero_titulo}<br></h1>
+                <p class="hero-descripcion">{data.hero_descripcion}</p>
+                <div>
+                    <a href="#proyectos" class="btn-cta">Ver mis proyectos</a>
+                </div>
+            </div>
+            
+            <div class="sobre-mi-foto-wrapper">
+                <div class="sobre-mi-foto-marco">
+                    <img class="perfil-img" src={data.perfil_img} alt="Fotografía de Carlos">
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- CONTENIDO PRINCIPAL -->
-  <main class="max-w-6xl mx-auto px-4 py-12">
-
-    <!-- HERO SECTION -->
-    <section class="mb-12">
-      <div class="font-mono text-xs text-cyan-400 mb-3 flex items-center gap-2">
-        <span>~ / CarlosBuilds / blog</span>
-      </div>
-
-      <h1 class="text-3xl md:text-5xl font-bold text-slate-100 tracking-tight mb-4 max-w-2xl leading-tight">
-        Mini proyectos, <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">problemas reales</span> y lo que aprendí.
-      </h1>
-
-      <p class="text-slate-400 max-w-2xl text-base mb-6 leading-relaxed">
-        Escribo sobre lo que construyo y lo que rompo. Backend, herramientas de línea de comandos, bases de datos y los errores que nadie documenta bien.
-      </p>
-
-      <div class="font-mono text-xs text-slate-500 flex items-center gap-4">
-        <span><strong class="text-slate-100" id="counter-total">{totalPosts}</strong> posts publicados</span>
-      </div>
     </section>
 
-    <!-- GRID PRINCIPAL -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-
-      <!-- COLUMNA IZQUIERDA: FILTROS + LISTA DE ARTÍCULOS -->
-      <div class="lg:col-span-8">
-
-        <!-- BOTONES DE FILTRO DE CATEGORÍA -->
-        <div class="flex flex-wrap gap-2 mb-6 font-mono text-xs" id="category-filters">
-          <button data-filter="TODOS" class="cat-btn active bg-cyan-400 text-black font-bold px-3 py-1.5 rounded transition-all">
-            TODOS
-          </button>
-          <button data-filter="MINI-PROYECTO" class="cat-btn bg-[#0b1120] text-slate-400 border border-slate-800 hover:border-slate-600 px-3 py-1.5 rounded transition-all">
-            MINI-PROYECTO
-          </button>
-          <button data-filter="PROBLEMA-RESUELTO" class="cat-btn bg-[#0b1120] text-slate-400 border border-slate-800 hover:border-slate-600 px-3 py-1.5 rounded transition-all">
-            PROBLEMA-RESUELTO
-          </button>
-        </div>
-
-        <!-- CONTENEDOR DE POSTS -->
-        <div class="space-y-4" id="posts-container">
-          {posts.map((post) => (
-            <article 
-              class="post-card bg-[#0b1120] border border-slate-800/80 hover:border-cyan-400/50 rounded-lg p-6 transition-all duration-200 group"
-              data-category={post.data.category}
-              data-tags={JSON.stringify(post.data.tags || [])}
-            >
-              <div class="flex justify-between items-center font-mono text-xs mb-3">
-                <span class="bg-cyan-400/10 text-cyan-400 border border-cyan-400/30 px-2 py-0.5 rounded font-semibold">
-                  {post.data.category}
-                </span>
-              </div>
-
-              <h2 class="text-lg font-bold text-slate-100 group-hover:text-cyan-400 transition-colors mb-2">
-                <a href={`/blog/${post.slug}`}>{post.data.title}</a>
-              </h2>
-
-              <p class="text-xs text-slate-400 leading-relaxed mb-4">
-                {post.data.summary}
-              </p>
-
-              <div class="flex flex-wrap justify-between items-center font-mono text-[11px] text-slate-500 pt-3 border-t border-slate-800/40 gap-2">
-                <div class="flex gap-1.5 flex-wrap">
-                  {post.data.tags?.map((tag) => (
-                    <span class="bg-slate-900 border border-slate-800 text-slate-400 px-2 py-0.5 rounded">
-                      #{tag}
-                    </span>
-                  ))}
+    <!-- LENGUAJES -->
+    <section id="lenguajes">
+        <h2 class="titulo-seccion">Lenguajes de Programación</h2>
+        <div class="skills-grid">
+            {data.tech_stack.map((tech) => (
+                <div class="skill-card">
+                    <img src={tech.icon} alt={tech.name} width="40" height="40">
+                    <p>{tech.name}</p>
                 </div>
-                <div class="flex items-center gap-3">
-                  <span>{post.data.date}</span>
-                  <a href={`/blog/${post.slug}`} class="text-cyan-400 hover:underline">Leer artículo →</a>
-                </div>
-              </div>
-            </article>
-          ))}
+            ))}
         </div>
-
-        <div id="no-results" class="hidden text-center py-12 border border-dashed border-slate-800 rounded-lg font-mono text-xs text-slate-500">
-          No se encontraron artículos con estos filtros.
-        </div>
-
-      </div>
-
-      <!-- COLUMNA DERECHA: SIDEBAR -->
-      <aside class="lg:col-span-4 space-y-6">
-
-        <!-- SOBRE MÍ -->
-        <div class="bg-[#0b1120] border border-slate-800/80 rounded-lg p-5">
-          <div class="font-mono text-xs text-cyan-400 mb-2">// SOBRE MI</div>
-          <p class="text-xs text-slate-400 leading-relaxed mb-4">
-            Hola, soy Carlos. Construyo proyectos web y de backend para entender cosas grandes. Todo lo que aprendo y resuelvo, lo escribo aquí.
-          </p>
-          <div class="font-mono text-xs flex flex-wrap gap-4 text-cyan-400">
-            <a href="https://github.com/CarlosCastro253385/" target="_blank" class="hover:underline">GitHub</a>
-            <a href="https://www.instagram.com/slrc_ttr/" target="_blank" class="hover:underline">Instagram</a>
-            <button class="copy-email-link hover:underline text-left cursor-pointer" data-email={contactEmail}>Contacto</button>
-          </div>
-        </div>
-
-        <!-- TAGS INTERACTIVOS -->
-        {allTags.length > 0 && (
-          <div class="bg-[#0b1120] border border-slate-800/80 rounded-lg p-5">
-            <div class="font-mono text-xs text-cyan-400 mb-3">// TAGS</div>
-            <div class="flex flex-wrap gap-1.5 font-mono text-[11px]" id="tags-container">
-              {allTags.map((tag) => (
-                <button 
-                  data-tag={tag} 
-                  class="tag-btn bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-600 px-2 py-1 rounded transition-all"
-                >
-                  #{tag}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <!-- STATS AUTOMÁTICAS -->
-        <div class="bg-[#0b1120] border border-slate-800/80 rounded-lg p-5 font-mono text-xs space-y-2">
-          <div class="text-cyan-400 mb-3">// STATS</div>
-          <div class="flex justify-between text-slate-400">
-            <span>total posts</span>
-            <span class="text-cyan-400 font-bold">{totalPosts}</span>
-          </div>
-          <div class="flex justify-between text-slate-400">
-            <span>mini-proyectos</span>
-            <span class="text-cyan-400 font-bold">{miniProjectsCount}</span>
-          </div>
-          <div class="flex justify-between text-slate-400">
-            <span>problemas resueltos</span>
-            <span class="text-cyan-400 font-bold">{problemsSolvedCount}</span>
-          </div>
-          <div class="flex justify-between text-slate-400">
-            <span>tags distintos</span>
-            <span class="text-cyan-400 font-bold">{allTags.length}</span>
-          </div>
-        </div>
-
-      </aside>
-
-    </div>
-
-    <!-- SECCIÓN INFERIOR: LENGUAJES Y CERTIFICACIONES -->
-    <section class="mt-16 space-y-12">
-
-      <!-- LENGUAJES DE PROGRAMACIÓN -->
-      <div>
-        <div class="flex items-center gap-3 mb-6">
-          <h2 class="text-2xl font-bold text-slate-100">Lenguajes de Programación</h2>
-          <div class="h-[2px] w-12 bg-cyan-400 rounded-full"></div>
-        </div>
-
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
-          {techStack.map((tech) => (
-            <div class="bg-[#0b1120] border border-slate-800/80 hover:border-cyan-400/50 rounded-lg p-5 flex flex-col items-center justify-center text-center transition-all duration-200 group">
-              <img src={tech.icon} alt={tech.name} class="w-10 h-10 mb-3 object-contain transition-transform group-hover:scale-110" />
-              <span class="text-xs font-semibold text-slate-200 group-hover:text-cyan-400 transition-colors">{tech.name}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <!-- CERTIFICACIONES Y CURSOS -->
-      <div>
-        <div class="flex items-center gap-3 mb-6">
-          <h2 class="text-2xl font-bold text-slate-100">Certificaciones y Cursos</h2>
-          <div class="h-[2px] w-12 bg-cyan-400 rounded-full"></div>
-        </div>
-
-        <div class="space-y-4">
-          {certifications.map((cert) => (
-            <div class="bg-[#0b1120] border border-slate-800/80 hover:border-cyan-400/50 rounded-lg p-5 flex justify-between items-center relative overflow-hidden transition-all duration-200 group">
-              <div class="absolute left-0 top-0 bottom-0 w-1 bg-cyan-400"></div>
-              <div class="pl-3">
-                <h3 class="text-base font-bold text-slate-100 group-hover:text-cyan-400 transition-colors">{cert.title}</h3>
-                <p class="text-xs text-slate-400 mt-1">{cert.issuer}</p>
-              </div>
-              <span class="font-mono text-sm font-bold text-cyan-400">{cert.year}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
     </section>
 
-  </main>
+    <!-- PROYECTOS -->
+    <section id="proyectos">
+        <h2 class="titulo-seccion">Mis Proyectos</h2>
+        <div class="proyectos-grid">
+            {data.proyectos.map((proy) => (
+                <div class={`proyecto-card ${proy.badge ? 'proyecto-destacado' : ''}`}>
+                    <div class="proyecto-info">
+                        {proy.badge && <span class="badge-integrador">{proy.badge}</span>}
+                        <h3 class="proyecto-titulo">{proy.titulo}</h3>
+                        <p class="proyecto-desc">{proy.descripcion}</p>
+                        <ul class="proyecto-tech">
+                            {proy.tecnologias.map((tech) => (
+                                <li>{tech}</li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </section>
 
-  <!-- FOOTER -->
-  <footer class="border-t border-slate-800/60 mt-20 py-8 text-center font-mono text-xs text-slate-600">
-    <p>© 2026 CarlosBuilds · El hombre aprende mientras vive · sin cookies, sin trackers</p>
-  </footer>
+    <!-- TRAYECTORIA ACADÉMICA -->
+    <section id="eventos">
+        <h2 class="titulo-seccion">Trayectoria Académica</h2>
+        <div class="eventos-grid">
+            {data.eventos.map((evento) => (
+                <div class="evento-card">
+                    <div class="evento-contenedor-img">
+                        <img class="evento-img" src={evento.imagen} alt={evento.titulo}>
+                    </div>
+                    <div class="evento-info">
+                        <span class="evento-tag">{evento.tag}</span>
+                        <h3 class="evento-titulo">{evento.titulo}</h3>
+                        <p class="evento-desc">{evento.descripcion}</p>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </section>
 
-  <!-- SCRIPTS CLIENT SIDE -->
-  <script is:inline>
-    // --- LÓGICA DE COPIAR CORREO ---
-    const copyBtn = document.getElementById('copy-email-btn');
-    const btnText = document.getElementById('email-btn-text');
-    const emailLinks = document.querySelectorAll('.copy-email-link');
+    <!-- CERTIFICACIONES -->
+    <section id="certificaciones">
+        <h2 class="titulo-seccion">Certificaciones y Cursos</h2>
+        <div class="cert-lista">
+            {data.certifications.map((cert) => (
+                <div class="cert-item">
+                    <div class="cert-info">
+                        <h3>{cert.title}</h3>
+                        <p>{cert.issuer}</p>
+                    </div>
+                    <div class="cert-fecha">{cert.year}</div>
+                </div>
+            ))}
+        </div>
+    </section>
 
-    function copyToClipboard(email) {
-      navigator.clipboard.writeText(email).then(() => {
-        if (btnText) {
-          const originalText = btnText.innerText;
-          btnText.innerText = '✓ ¡Copiado!';
-          setTimeout(() => {
-            btnText.innerText = originalText;
-          }, 2000);
-        }
-      });
-    }
+    <!-- CONTACTO -->
+    <section id="contacto">
+        <h2 class="titulo-seccion">Ponte en Contacto</h2>
+        <div class="contacto-container">
+            <p class="contacto-desc">¿Tienes un proyecto en mente, una consulta o te gustaría colaborar juntos? ¡Escríbeme!</p>
+            <div class="contacto-links">
+                <a href={`mailto:${data.contacto_email}`} class="btn-contacto">📧 Enviar Correo</a>
+                <a href={data.github_url} target="_blank" class="btn-contacto">💻 GitHub</a>
+                <a href={data.instagram_url} target="_blank" class="btn-contacto">📸 Instagram</a>
+            </div>
+        </div>
+    </section>
 
-    if (copyBtn) {
-      copyBtn.addEventListener('click', () => {
-        const email = copyBtn.dataset.email;
-        copyToClipboard(email);
-      });
-    }
-
-    emailLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        const email = link.dataset.email;
-        copyToClipboard(email);
-      });
-    });
-
-    // --- LÓGICA DE FILTRADO DE POSTS ---
-    let activeCategory = 'TODOS';
-    let activeTag = null;
-
-    const cards = document.querySelectorAll('.post-card');
-    const noResults = document.getElementById('no-results');
-    const catBtns = document.querySelectorAll('.cat-btn');
-    const tagBtns = document.querySelectorAll('.tag-btn');
-    const counterTotal = document.getElementById('counter-total');
-
-    function applyFilters() {
-      let visibleCount = 0;
-
-      cards.forEach(card => {
-        const category = card.dataset.category;
-        const tags = JSON.parse(card.dataset.tags || '[]');
-
-        const matchCategory = activeCategory === 'TODOS' || category === activeCategory;
-        const matchTag = activeTag === null || tags.includes(activeTag);
-
-        if (matchCategory && matchTag) {
-          card.classList.remove('hidden');
-          visibleCount++;
-        } else {
-          card.classList.add('hidden');
-        }
-      });
-
-      if (counterTotal) {
-        counterTotal.innerText = visibleCount.toString();
-      }
-
-      if (noResults) {
-        if (visibleCount === 0) {
-          noResults.classList.remove('hidden');
-        } else {
-          noResults.classList.add('hidden');
-        }
-      }
-    }
-
-    // Eventos de botones de categoría
-    catBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        catBtns.forEach(b => {
-          b.className = "cat-btn bg-[#0b1120] text-slate-400 border border-slate-800 hover:border-slate-600 px-3 py-1.5 rounded transition-all";
-        });
-        btn.className = "cat-btn active bg-cyan-400 text-black font-bold px-3 py-1.5 rounded transition-all";
-        
-        activeCategory = btn.dataset.filter || 'TODOS';
-        applyFilters();
-      });
-    });
-
-    // Eventos de botones de tags
-    tagBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const tag = btn.dataset.tag || null;
-
-        if (activeTag === tag) {
-          activeTag = null;
-          btn.className = "tag-btn bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-600 px-2 py-1 rounded transition-all";
-        } else {
-          tagBtns.forEach(b => {
-            b.className = "tag-btn bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-600 px-2 py-1 rounded transition-all";
-          });
-          btn.className = "tag-btn bg-cyan-400 text-black font-bold border border-cyan-400 px-2 py-1 rounded transition-all";
-          activeTag = tag;
-        }
-
-        applyFilters();
-      });
-    });
-  </script>
+    <footer>
+        <p>&copy; 2026 Carlos Castro. Si no te gusta mi trabajo, te pido una disculpa pública en X</p>
+    </footer>
 
 </body>
 </html>
