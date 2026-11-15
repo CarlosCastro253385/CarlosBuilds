@@ -4,7 +4,9 @@ const blogCollection = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
-    date: z.string(),
+    date: z.union([z.string(), z.date()]).transform((val: string | Date) =>
+  val instanceof Date ? val.toISOString().split('T')[0] : val
+),
     category: z.string(),
     summary: z.string(),
     tags: z.array(z.string()),

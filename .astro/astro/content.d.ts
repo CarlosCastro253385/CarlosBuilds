@@ -148,6 +148,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"solución-al-error-de-cors-y-tipos-en-astro-con-decap-cms.md": {
+	id: "solución-al-error-de-cors-y-tipos-en-astro-con-decap-cms.md";
+  slug: "solución-al-error-de-cors-y-tipos-en-astro-con-decap-cms";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 };
 
 	};
