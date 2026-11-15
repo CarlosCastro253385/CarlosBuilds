@@ -1,0 +1,22 @@
+<!DOCTYPE html><html lang="es" class="dark"> <head><meta charset="utf-8"><title>Solución al error de CORS y tipos en Astro con Decap CMS — CarlosBuilds</title><link rel="stylesheet" href="/_astro/_slug_.C7Ar8dEP.css"></head> <body class="bg-gray-950 text-gray-100 min-h-screen font-sans p-6"> <main class="max-w-3xl mx-auto space-y-6"> <a href="/" class="text-cyan-400 hover:underline">← Volver al inicio</a> <h1 class="text-3xl font-bold text-white">Solución al error de CORS y tipos en Astro con Decap CMS</h1> <p class="text-gray-400 text-sm">2026-11-09 • PROBLEMA-RESUELTO</p> <hr class="border-gray-800"> <article class="prose prose-invert max-w-none"> <p>Al construir mi sitio web personal (**CarlosBuilds**), necesité combinar dos tipos de datos completamente distintos:</p>
+<ol>
+<li>
+<p>**Landing Page:** Estructura fija (JSON) administrada desde un solo archivo.</p>
+</li>
+<li>
+<p>**Blog:** Artículos dinámicos en formato Markdown.</p>
+</li>
+</ol>
+<p>## La Solución</p>
+<p>Utilizamos las **Content Collections** de Astro declarando dos esquemas con Zod en `src/content/config.ts`:</p>
+<p>```typescript</p>
+<p>// Colección de datos estáticos</p>
+<p>const landingCollection = defineCollection({</p>
+<p>type: ‘data’,</p>
+<p>schema: z.object({ … })</p>
+<p>});</p>
+<p>// Colección de artículos</p>
+<p>const blogCollection = defineCollection({</p>
+<p>type: ‘content’,</p>
+<p>schema: z.object({ … })</p>
+<p>});</p> </article> </main> </body></html>
