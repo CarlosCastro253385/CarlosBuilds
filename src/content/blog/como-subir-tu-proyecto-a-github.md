@@ -75,7 +75,7 @@ GitHub te mostrará un bloque de comandos. Copia y pega en tu terminal las sigui
 Resumen de comandos diarios
 Una vez configurado, cada vez que hagas cambios en tu proyecto solo tendrás que repetir estos tres comandos:
 
-``` Bash
+``` bash
 git add .
 git commit -m "mensaje de los cambios realizados"
 git push origin main
