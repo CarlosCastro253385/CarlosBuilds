@@ -2,7 +2,9 @@ backend:
   name: github
   repo: CarlosCastro253385/CarlosBuilds
   branch: main
-
+  base_url: https://carlos-builds.vercel.app
+  auth_endpoint: api/auth
+  
 media_folder: "public/imagenes"
 public_folder: "/imagenes"
 
