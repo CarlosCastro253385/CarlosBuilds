@@ -1,0 +1,46 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  htmlClass?: string;
+  bodyClass?: string;
+  type?: 'website' | 'article';
+}
+
+const {
+  title,
+  description = 'Mini proyectos, problemas reales y lo que aprendí. Por Carlos Castro.',
+  image,
+  htmlClass = '',
+  bodyClass = '',
+  type = 'website',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const imagenAbsoluta = image ? new URL(image, Astro.site).href : undefined;
+---
+
+<!doctype html>
+<html lang="es" class={htmlClass}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#050810" />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {imagenAbsoluta && <meta property="og:image" content={imagenAbsoluta} />}
+    <meta name="twitter:card" content={imagenAbsoluta ? 'summary_large_image' : 'summary'} />
+
+    <slot name="head" />
+  </head>
+  <body class={bodyClass}>
+    <slot />
+  </body>
+</html>

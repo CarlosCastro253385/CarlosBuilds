@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import '../../styles/global.css';
 
 // Obtener todos los posts desde src/content/blog/
@@ -17,63 +18,19 @@ const allTags = Array.from(
 
 // Tu correo de contacto
 const contactEmail = 'cruzcastro4@gmail.com';
-
-// Definición de Lenguajes de Programación
-const techStack = [
-  { name: 'Java', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg' },
-  { name: 'C++', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg' },
-  { name: 'Bash / Shell Scripting', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg' },
-  { name: 'Python', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
-  { name: 'CSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
-  { name: 'HTML', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' }
-];
-
-// Definición de Certificaciones
-const certifications = [
-  {
-    title: 'Cloud Foundations',
-    issuer: 'Amazon Web Services (AWS)',
-    year: '2025'
-  },
-  {
-    title: 'Soporte de sistemas operativos',
-    issuer: 'Cisco Networking Academy',
-    year: '2026'
-  }
-];
 ---
 
-<!DOCTYPE html>
-<html lang="es" class="dark">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CarlosBuilds — Mini proyectos y problemas reales</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-
-  <style>
-    body {
-      background-color: #050810;
-      background-image: 
-        radial-gradient(circle at 50% 0%, rgba(0, 242, 254, 0.08) 0%, transparent 60%),
-        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 100% 100%, 32px 32px, 32px 32px;
-    }
-
-    .blink-cursor {
-      animation: blink 1s step-start infinite;
-    }
-    @keyframes blink {
-      50% { opacity: 0; }
-    }
-  </style>
-</head>
-
-<body class="font-sans text-slate-400 min-h-screen antialiased selection:bg-cyan-400 selection:text-black">
+<BaseLayout
+  title="CarlosBuilds — Mini proyectos y problemas reales"
+  description="Escribo sobre lo que construyo y lo que rompo: backend, herramientas de línea de comandos, bases de datos y los errores que nadie documenta bien."
+  htmlClass="dark"
+  bodyClass="font-sans text-slate-400 min-h-screen antialiased selection:bg-cyan-400 selection:text-black"
+>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet" />
+  </Fragment>
 
   <!-- ENCABEZADO -->
   <header class="border-b border-slate-800/60 bg-[#050810]/80 backdrop-blur-md sticky top-0 z-50">
@@ -199,8 +156,8 @@ const certifications = [
             Hola, soy Carlos. Construyo proyectos web y de backend para entender cosas grandes. Todo lo que aprendo y resuelvo, lo escribo aquí.
           </p>
           <div class="font-mono text-xs flex flex-wrap gap-4 text-cyan-400">
-            <a href="https://github.com/CarlosCastro253385/" target="_blank" class="hover:underline">GitHub</a>
-            <a href="https://www.instagram.com/slrc_ttr/" target="_blank" class="hover:underline">Instagram</a>
+            <a href="https://github.com/CarlosCastro253385/" target="_blank" rel="noopener noreferrer" class="hover:underline">GitHub</a>
+            <a href="https://www.instagram.com/slrc_ttr/" target="_blank" rel="noopener noreferrer" class="hover:underline">Instagram</a>
             <button class="copy-email-link hover:underline text-left cursor-pointer" data-email={contactEmail}>Contacto</button>
           </div>
         </div>
@@ -361,6 +318,22 @@ const certifications = [
       });
     });
   </script>
+</BaseLayout>
 
-</body>
-</html>
+<style is:global>
+  body {
+    background-color: #050810;
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(0, 242, 254, 0.08) 0%, transparent 60%),
+      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 32px 32px, 32px 32px;
+  }
+
+  .blink-cursor {
+    animation: blink 1s step-start infinite;
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+</style>
