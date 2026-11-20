@@ -1,0 +1,62 @@
+/* ===== Aspecto del panel =====
+   Decap no tiene temas oficiales. El modo oscuro invierte los colores de toda la
+   página y vuelve a invertir imágenes y la vista previa para que se vean normales. */
+
+html[data-tema="oscuro"] {
+  background: #ffffff;
+  filter: invert(1) hue-rotate(180deg);
+}
+
+html[data-tema="oscuro"] img,
+html[data-tema="oscuro"] video,
+html[data-tema="oscuro"] iframe,
+html[data-tema="oscuro"] canvas,
+html[data-tema="oscuro"] [style*="background-image"] {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Barra de color arriba */
+.panel-barra {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 99999;
+  pointer-events: none;
+  background: linear-gradient(90deg, #00f2fe, #7928ca, #ff0080);
+}
+
+/* Botón claro / oscuro */
+.panel-tema-btn {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 99999;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid #475569;
+  border-radius: 999px;
+  background: #0a0b10;
+  color: #e2e8f0;
+  font: 600 13px/1 system-ui, -apple-system, 'Segoe UI', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+/* Las dos piezas propias se re-invierten para conservar sus colores */
+html[data-tema="oscuro"] .panel-barra,
+html[data-tema="oscuro"] .panel-tema-btn {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Foco visible con teclado */
+html body a:focus-visible,
+html body button:focus-visible,
+html body input:focus-visible,
+html body textarea:focus-visible,
+html body select:focus-visible,
+html body [tabindex]:focus-visible {
+  outline: 2px solid #00b8c4;
+  outline-offset: 2px;
+}
