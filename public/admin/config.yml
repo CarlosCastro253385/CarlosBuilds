@@ -4,75 +4,103 @@ backend:
   branch: main
   base_url: https://carlos-builds.vercel.app
   auth_endpoint: api/auth
-  
+
+locale: "es"
+
+site_url: https://carlos-builds.vercel.app
+display_url: https://carlos-builds.vercel.app
+
 media_folder: "public/imagenes"
 public_folder: "/imagenes"
 
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "-"
+
 collections:
   - name: "landing_settings"
-    label: "Landing Page"
+    label: "Página principal"
+    label_singular: "Página principal"
+    description: "Textos, proyectos, certificaciones y enlaces de tu página personal (la landing)."
     delete: false
     files:
       - file: "src/content/landing/index.json"
-        label: "Contenido de la Landing Page"
+        label: "Contenido de la página principal"
         name: "landing_content"
         extension: "json"
         format: "json"
         fields:
-          - { label: "Subtítulo Hero", name: "hero_sub", widget: "string" }
-          - { label: "Título Hero", name: "hero_titulo", widget: "string" }
-          - { label: "Descripción Hero", name: "hero_descripcion", widget: "text" }
-          - { label: "Foto de Perfil", name: "perfil_img", widget: "image" }
-          
-          - label: "Lenguajes de Programación"
+          - { label: "Subtítulo (arriba del título)", name: "hero_sub", widget: "string", hint: "Ejemplo: Hola, soy Carlos" }
+          - { label: "Título principal", name: "hero_titulo", widget: "string" }
+          - { label: "Descripción", name: "hero_descripcion", widget: "text", hint: "Dos o tres frases sobre ti." }
+          - { label: "Foto de perfil", name: "perfil_img", widget: "image", hint: "Se recorta en círculo. Una foto cuadrada se ve mejor." }
+
+          - label: "Lenguajes de programación"
             name: "tech_stack"
             widget: "list"
+            summary: "{{fields.name}}"
+            label_singular: "lenguaje"
             fields:
               - { label: "Nombre", name: "name", widget: "string" }
               - { label: "Icono", name: "icon", widget: "image" }
 
-          - label: "Mis Proyectos"
+          - label: "Mis proyectos"
             name: "proyectos"
             widget: "list"
+            summary: "{{fields.titulo}}"
+            label_singular: "proyecto"
             fields:
-              - { label: "Etiqueta Destacada (Opcional)", name: "badge", widget: "string", required: false }
-              - { label: "Título del Proyecto", name: "titulo", widget: "string" }
+              - { label: "Etiqueta destacada (opcional)", name: "badge", widget: "string", required: false, hint: "Ejemplo: Proyecto integrador. Déjala vacía si no aplica." }
+              - { label: "Título del proyecto", name: "titulo", widget: "string" }
               - { label: "Descripción", name: "descripcion", widget: "text" }
-              - { label: "Tecnologías", name: "tecnologias", widget: "list" }
+              - { label: "Tecnologías", name: "tecnologias", widget: "list", hint: "Agrega una por elemento: Java, Python, etc." }
 
-          - label: "Trayectoria Académica"
+          - label: "Trayectoria académica"
             name: "eventos"
             widget: "list"
+            summary: "{{fields.titulo}}"
+            label_singular: "evento"
             fields:
-              - { label: "Etiqueta (ej: Actualidad)", name: "tag", widget: "string" }
+              - { label: "Etiqueta (ejemplo: Actualidad)", name: "tag", widget: "string" }
               - { label: "Título", name: "titulo", widget: "string" }
               - { label: "Descripción", name: "descripcion", widget: "text" }
-              - { label: "Imagen URL", name: "imagen", widget: "string" }
+              - { label: "Imagen", name: "imagen", widget: "image", hint: "Sube una foto o pega una URL." }
 
           - label: "Certificaciones"
             name: "certifications"
             widget: "list"
+            summary: "{{fields.title}}"
+            label_singular: "certificación"
             fields:
               - { label: "Título", name: "title", widget: "string" }
               - { label: "Emisor", name: "issuer", widget: "string" }
               - { label: "Año", name: "year", widget: "string" }
 
-          - { label: "Email de Contacto", name: "contacto_email", widget: "string" }
+          - { label: "Email de contacto", name: "contacto_email", widget: "string" }
           - { label: "URL de GitHub", name: "github_url", widget: "string" }
           - { label: "URL de Instagram", name: "instagram_url", widget: "string" }
 
   - name: "blog"
-    label: "Blog Posts"
+    label: "Entradas del blog"
+    label_singular: "entrada"
+    description: "Mini proyectos y problemas resueltos que aparecen en tu blog."
     folder: "src/content/blog"
     create: true
     slug: "{{slug}}"
+    summary: "{{title}}"
+    sortable_fields: ["date", "title", "category"]
+    view_filters:
+      - { label: "Mini proyectos", field: "category", pattern: "MINI-PROYECTO" }
+      - { label: "Problemas resueltos", field: "category", pattern: "PROBLEMA-RESUELTO" }
     fields:
       - { label: "Título", name: "title", widget: "string" }
-      - { label: "Categoría", name: "category", widget: "select", options: ["MINI-PROYECTO", "PROBLEMA-RESUELTO"] }
-      - { label: "Resumen", name: "summary", widget: "text" }
-      - { label: "Fecha", name: "date", widget: "string" }
+      - { label: "Categoría", name: "category", widget: "select", options: ["MINI-PROYECTO", "PROBLEMA-RESUELTO"], default: "MINI-PROYECTO" }
+      - { label: "Resumen", name: "summary", widget: "text", hint: "Una o dos frases. Se ve en la tarjeta del blog y al compartir el enlace." }
+      - { label: "Fecha", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, default: "{{now}}" }
       - label: "Etiquetas"
         name: "tags"
         widget: "list"
+        hint: "Palabras clave cortas: astro, git, github..."
         field: { label: "Etiqueta", name: "tag", widget: "string" }
       - { label: "Contenido", name: "body", widget: "markdown" }
