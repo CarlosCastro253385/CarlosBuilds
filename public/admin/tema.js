@@ -9,11 +9,22 @@
   var boton = document.createElement('button');
   boton.type = 'button';
   boton.className = 'panel-tema-btn';
+
+  var icono = document.createElement('span');
+  icono.className = 'panel-tema-icono';
+  icono.setAttribute('aria-hidden', 'true');
+
+  var texto = document.createElement('span');
+  texto.className = 'panel-tema-texto';
+
+  boton.appendChild(icono);
+  boton.appendChild(texto);
   document.body.appendChild(boton);
 
   function pintar() {
     var oscuro = raiz.getAttribute('data-tema') === 'oscuro';
-    boton.textContent = oscuro ? '☀️ Modo claro' : '🌙 Modo oscuro';
+    icono.textContent = oscuro ? '☀️' : '🌙';
+    texto.textContent = oscuro ? ' Modo claro' : ' Modo oscuro';
     boton.setAttribute('aria-label', oscuro ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
   }
 
