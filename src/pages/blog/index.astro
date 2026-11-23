@@ -36,7 +36,7 @@ const contactEmail = 'cruzcastro4@gmail.com';
   <header class="border-b border-slate-800/60 bg-[#050810]/80 backdrop-blur-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between text-sm">
       <a href="/" class="font-mono text-slate-100 hover:text-cyan-400 transition-colors flex items-center gap-2">
-        <span class="text-cyan-400">&gt;</span> CarlosBuilds<span class="inline-block w-2 h-4 bg-cyan-400 blink-cursor"></span>
+        <span class="text-cyan-400" aria-hidden="true">&gt;</span> CarlosBuilds<span class="inline-block w-2 h-4 bg-cyan-400 blink-cursor" aria-hidden="true"></span>
       </a>
 
       <div class="flex items-center gap-3 font-mono text-xs">
@@ -44,16 +44,16 @@ const contactEmail = 'cruzcastro4@gmail.com';
         <button 
           id="copy-email-btn"
           data-email={contactEmail}
-          class="flex items-center gap-2 bg-[#0b1120] text-slate-300 hover:text-cyan-400 border border-slate-800 hover:border-cyan-400/50 px-3 py-1.5 rounded transition-all cursor-pointer"
+          class="flex items-center gap-2 min-h-11 sm:min-h-9 bg-[#0b1120] text-slate-300 hover:text-cyan-400 border border-slate-800 hover:border-cyan-400/50 px-3 rounded transition-all cursor-pointer"
         >
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
           </svg>
-          <span id="email-btn-text">Copiar Email</span>
+          <span id="email-btn-text" aria-live="polite">Copiar Email</span>
         </button>
 
         <div class="hidden sm:flex items-center gap-2 text-emerald-400 bg-emerald-950/40 border border-emerald-800/50 px-2.5 py-1 rounded-full">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true"></span>
           Disponible
         </div>
       </div>
@@ -77,7 +77,7 @@ const contactEmail = 'cruzcastro4@gmail.com';
         Escribo sobre lo que construyo y lo que rompo. Backend, herramientas de línea de comandos, bases de datos y los errores que nadie documenta bien.
       </p>
 
-      <div class="font-mono text-xs text-slate-500 flex items-center gap-4">
+      <div class="font-mono text-xs text-slate-400 flex items-center gap-4">
         <span><strong class="text-slate-100" id="counter-total">{totalPosts}</strong> posts publicados</span>
       </div>
     </section>
@@ -90,13 +90,13 @@ const contactEmail = 'cruzcastro4@gmail.com';
 
         <!-- BOTONES DE FILTRO DE CATEGORÍA -->
         <div class="flex flex-wrap gap-2 mb-6 font-mono text-xs" id="category-filters">
-          <button data-filter="TODOS" class="cat-btn active bg-cyan-400 text-black font-bold px-3 py-1.5 rounded transition-all">
+          <button data-filter="TODOS" aria-pressed="true" class="cat-btn active bg-cyan-400 text-black font-bold px-3 min-h-11 sm:min-h-9 inline-flex items-center rounded transition-all">
             TODOS
           </button>
-          <button data-filter="MINI-PROYECTO" class="cat-btn bg-[#0b1120] text-slate-400 border border-slate-800 hover:border-slate-600 px-3 py-1.5 rounded transition-all">
+          <button data-filter="MINI-PROYECTO" aria-pressed="false" class="cat-btn bg-[#0b1120] text-slate-400 border border-slate-800 hover:border-slate-600 px-3 min-h-11 sm:min-h-9 inline-flex items-center rounded transition-all">
             MINI-PROYECTO
           </button>
-          <button data-filter="PROBLEMA-RESUELTO" class="cat-btn bg-[#0b1120] text-slate-400 border border-slate-800 hover:border-slate-600 px-3 py-1.5 rounded transition-all">
+          <button data-filter="PROBLEMA-RESUELTO" aria-pressed="false" class="cat-btn bg-[#0b1120] text-slate-400 border border-slate-800 hover:border-slate-600 px-3 min-h-11 sm:min-h-9 inline-flex items-center rounded transition-all">
             PROBLEMA-RESUELTO
           </button>
         </div>
@@ -105,7 +105,7 @@ const contactEmail = 'cruzcastro4@gmail.com';
         <div class="space-y-4" id="posts-container">
           {posts.map((post) => (
             <article 
-              class="post-card bg-[#0b1120] border border-slate-800/80 hover:border-cyan-400/50 rounded-lg p-6 transition-all duration-200 group"
+              class="post-card bg-[#0b1120] border border-slate-800/80 hover:border-cyan-400/50 rounded-lg p-5 sm:p-6 transition-all duration-200 group"
               data-category={post.data.category}
               data-tags={JSON.stringify(post.data.tags || [])}
             >
@@ -119,11 +119,11 @@ const contactEmail = 'cruzcastro4@gmail.com';
                 <a href={`/blog/${post.slug}`}>{post.data.title}</a>
               </h2>
 
-              <p class="text-xs text-slate-400 leading-relaxed mb-4">
+              <p class="text-sm text-slate-400 leading-relaxed mb-4">
                 {post.data.summary}
               </p>
 
-              <div class="flex flex-wrap justify-between items-center font-mono text-[11px] text-slate-500 pt-3 border-t border-slate-800/40 gap-2">
+              <div class="flex flex-wrap justify-between items-center font-mono text-[11px] text-slate-400 pt-3 border-t border-slate-800/40 gap-2">
                 <div class="flex gap-1.5 flex-wrap">
                   {post.data.tags?.map((tag) => (
                     <span class="bg-slate-900 border border-slate-800 text-slate-400 px-2 py-0.5 rounded">
@@ -133,14 +133,14 @@ const contactEmail = 'cruzcastro4@gmail.com';
                 </div>
                 <div class="flex items-center gap-3">
                   <span>{post.data.date}</span>
-                  <a href={`/blog/${post.slug}`} class="text-cyan-400 hover:underline">Leer artículo →</a>
+                  <a href={`/blog/${post.slug}`} class="text-cyan-400 hover:underline py-2">Leer artículo →</a>
                 </div>
               </div>
             </article>
           ))}
         </div>
 
-        <div id="no-results" class="hidden text-center py-12 border border-dashed border-slate-800 rounded-lg font-mono text-xs text-slate-500">
+        <div id="no-results" class="hidden text-center py-12 border border-dashed border-slate-800 rounded-lg font-mono text-xs text-slate-400" role="status">
           No se encontraron artículos con estos filtros.
         </div>
 
@@ -152,13 +152,13 @@ const contactEmail = 'cruzcastro4@gmail.com';
         <!-- SOBRE MÍ -->
         <div class="bg-[#0b1120] border border-slate-800/80 rounded-lg p-5">
           <div class="font-mono text-xs text-cyan-400 mb-2">// SOBRE MI</div>
-          <p class="text-xs text-slate-400 leading-relaxed mb-4">
+          <p class="text-sm text-slate-400 leading-relaxed mb-4">
             Hola, soy Carlos. Construyo proyectos web y de backend para entender cosas grandes. Todo lo que aprendo y resuelvo, lo escribo aquí.
           </p>
-          <div class="font-mono text-xs flex flex-wrap gap-4 text-cyan-400">
-            <a href="https://github.com/CarlosCastro253385/" target="_blank" rel="noopener noreferrer" class="hover:underline">GitHub</a>
-            <a href="https://www.instagram.com/slrc_ttr/" target="_blank" rel="noopener noreferrer" class="hover:underline">Instagram</a>
-            <button class="copy-email-link hover:underline text-left cursor-pointer" data-email={contactEmail}>Contacto</button>
+          <div class="font-mono text-xs flex flex-wrap gap-x-4 gap-y-1 text-cyan-400">
+            <a href="https://github.com/CarlosCastro253385/" target="_blank" rel="noopener noreferrer" class="hover:underline py-2">GitHub</a>
+            <a href="https://www.instagram.com/slrc_ttr/" target="_blank" rel="noopener noreferrer" class="hover:underline py-2">Instagram</a>
+            <button class="copy-email-link hover:underline text-left cursor-pointer py-2" data-email={contactEmail}>Contacto</button>
           </div>
         </div>
 
@@ -169,8 +169,9 @@ const contactEmail = 'cruzcastro4@gmail.com';
             <div class="flex flex-wrap gap-1.5 font-mono text-[11px]" id="tags-container">
               {allTags.map((tag) => (
                 <button 
-                  data-tag={tag} 
-                  class="tag-btn bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-600 px-2 py-1 rounded transition-all"
+                  data-tag={tag}
+                  aria-pressed="false"
+                  class="tag-btn bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-600 px-2 min-h-10 sm:min-h-8 inline-flex items-center rounded transition-all"
                 >
                   #{tag}
                 </button>
@@ -207,12 +208,18 @@ const contactEmail = 'cruzcastro4@gmail.com';
   </main>
 
   <!-- FOOTER -->
-  <footer class="border-t border-slate-800/60 mt-20 py-8 text-center font-mono text-xs text-slate-600">
+  <footer class="border-t border-slate-800/60 mt-20 py-8 text-center font-mono text-xs text-slate-400">
     <p>© 2026 CarlosBuilds · El hombre aprende mientras vive · sin cookies, sin trackers</p>
   </footer>
 
   <!-- SCRIPTS CLIENT SIDE -->
   <script is:inline>
+    // --- CLASES DE LOS BOTONES (activo / inactivo) ---
+    const CAT_ON = "cat-btn active bg-cyan-400 text-black font-bold px-3 min-h-11 sm:min-h-9 inline-flex items-center rounded transition-all";
+    const CAT_OFF = "cat-btn bg-[#0b1120] text-slate-400 border border-slate-800 hover:border-slate-600 px-3 min-h-11 sm:min-h-9 inline-flex items-center rounded transition-all";
+    const TAG_ON = "tag-btn bg-cyan-400 text-black font-bold border border-cyan-400 px-2 min-h-10 sm:min-h-8 inline-flex items-center rounded transition-all";
+    const TAG_OFF = "tag-btn bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-600 px-2 min-h-10 sm:min-h-8 inline-flex items-center rounded transition-all";
+
     // --- LÓGICA DE COPIAR CORREO ---
     const copyBtn = document.getElementById('copy-email-btn');
     const btnText = document.getElementById('email-btn-text');
@@ -289,10 +296,12 @@ const contactEmail = 'cruzcastro4@gmail.com';
     catBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         catBtns.forEach(b => {
-          b.className = "cat-btn bg-[#0b1120] text-slate-400 border border-slate-800 hover:border-slate-600 px-3 py-1.5 rounded transition-all";
+          b.className = CAT_OFF;
+          b.setAttribute('aria-pressed', 'false');
         });
-        btn.className = "cat-btn active bg-cyan-400 text-black font-bold px-3 py-1.5 rounded transition-all";
-        
+        btn.className = CAT_ON;
+        btn.setAttribute('aria-pressed', 'true');
+
         activeCategory = btn.dataset.filter || 'TODOS';
         applyFilters();
       });
@@ -303,14 +312,16 @@ const contactEmail = 'cruzcastro4@gmail.com';
       btn.addEventListener('click', () => {
         const tag = btn.dataset.tag || null;
 
+        tagBtns.forEach(b => {
+          b.className = TAG_OFF;
+          b.setAttribute('aria-pressed', 'false');
+        });
+
         if (activeTag === tag) {
           activeTag = null;
-          btn.className = "tag-btn bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-600 px-2 py-1 rounded transition-all";
         } else {
-          tagBtns.forEach(b => {
-            b.className = "tag-btn bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-600 px-2 py-1 rounded transition-all";
-          });
-          btn.className = "tag-btn bg-cyan-400 text-black font-bold border border-cyan-400 px-2 py-1 rounded transition-all";
+          btn.className = TAG_ON;
+          btn.setAttribute('aria-pressed', 'true');
           activeTag = tag;
         }
 
