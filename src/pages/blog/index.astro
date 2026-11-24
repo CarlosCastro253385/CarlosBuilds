@@ -26,6 +26,15 @@ const problemsSolvedCount = posts.filter(p => p.data.category === 'PROBLEMA-RESU
 const allTags = Array.from(
   new Set(posts.flatMap(post => post.data.tags || []))
 );
+
+// Texto en minúsculas y sin acentos, para que la búsqueda los ignore
+const normalizar = (texto: string) =>
+  texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+const textoBuscable = (post: (typeof posts)[number]) =>
+  normalizar(
+    [post.data.title, post.data.summary, post.data.category, ...(post.data.tags || [])].join(' ')
+  );
 ---
 
 <BaseLayout
@@ -100,8 +109,26 @@ const allTags = Array.from(
     <!-- GRID PRINCIPAL -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-      <!-- COLUMNA IZQUIERDA: FILTROS + LISTA DE ARTÍCULOS -->
+      <!-- COLUMNA IZQUIERDA: BUSCADOR + FILTROS + LISTA DE ARTÍCULOS -->
       <div class="lg:col-span-8">
+
+        <!-- BUSCADOR -->
+        <div class="mb-4">
+          <label for="search-input" class="sr-only">Buscar en el blog</label>
+          <div class="relative">
+            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"></path>
+            </svg>
+            <input
+              id="search-input"
+              type="search"
+              autocomplete="off"
+              placeholder="Buscar por título, resumen o etiqueta…"
+              class="w-full min-h-11 bg-[#0b1120] text-slate-100 placeholder:text-slate-400 border border-slate-800 hover:border-slate-600 focus:border-cyan-400 rounded pl-10 pr-3 font-mono text-base sm:text-sm transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400"
+            />
+          </div>
+          <p id="search-status" class="sr-only" role="status"></p>
+        </div>
 
         <!-- BOTONES DE FILTRO DE CATEGORÍA -->
         <div class="flex flex-wrap gap-2 mb-6 font-mono text-xs" id="category-filters">
@@ -123,6 +150,7 @@ const allTags = Array.from(
               class="post-card bg-[#0b1120] border border-slate-800/80 hover:border-cyan-400/50 rounded-lg p-5 sm:p-6 transition-all duration-200 group"
               data-category={post.data.category}
               data-tags={JSON.stringify(post.data.tags || [])}
+              data-search={textoBuscable(post)}
             >
               <div class="flex justify-between items-center font-mono text-xs mb-3">
                 <span class="bg-cyan-400/10 text-cyan-400 border border-cyan-400/30 px-2 py-0.5 rounded font-semibold">
@@ -155,8 +183,15 @@ const allTags = Array.from(
           ))}
         </div>
 
-        <div id="no-results" class="hidden text-center py-12 border border-dashed border-slate-800 rounded-lg font-mono text-xs text-slate-400" role="status">
-          No se encontraron artículos con estos filtros.
+        <div id="no-results" class="hidden text-center py-12 px-4 border border-dashed border-slate-800 rounded-lg font-mono text-xs text-slate-400">
+          <p class="mb-4">No se encontraron artículos con estos filtros.</p>
+          <button
+            id="clear-filters-btn"
+            type="button"
+            class="inline-flex items-center min-h-11 sm:min-h-9 px-4 rounded border border-slate-700 bg-[#0b1120] text-cyan-400 hover:border-cyan-400/50 transition-all cursor-pointer"
+          >
+            Limpiar filtros
+          </button>
         </div>
 
       </div>
@@ -270,27 +305,54 @@ const allTags = Array.from(
       });
     });
 
-    // --- LÓGICA DE FILTRADO DE POSTS ---
+    // --- LÓGICA DE BÚSQUEDA Y FILTRADO DE POSTS ---
     let activeCategory = 'TODOS';
     let activeTag = null;
+    let query = '';
 
     const cards = document.querySelectorAll('.post-card');
     const noResults = document.getElementById('no-results');
     const catBtns = document.querySelectorAll('.cat-btn');
     const tagBtns = document.querySelectorAll('.tag-btn');
     const counterTotal = document.getElementById('counter-total');
+    const searchInput = document.getElementById('search-input');
+    const searchStatus = document.getElementById('search-status');
+    const clearBtn = document.getElementById('clear-filters-btn');
+
+    // Minúsculas y sin acentos, igual que en el servidor
+    function normalizar(texto) {
+      return (texto || '')
+        .toString()
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+    }
+
+    // Guarda la búsqueda en la dirección (?q=...) sin recargar la página
+    function syncUrl() {
+      const url = new URL(window.location.href);
+      if (query) {
+        url.searchParams.set('q', query);
+      } else {
+        url.searchParams.delete('q');
+      }
+      window.history.replaceState({}, '', url);
+    }
 
     function applyFilters() {
       let visibleCount = 0;
+      const terms = normalizar(query).split(/\s+/).filter(Boolean);
 
       cards.forEach(card => {
         const category = card.dataset.category;
         const tags = JSON.parse(card.dataset.tags || '[]');
+        const haystack = card.dataset.search || '';
 
         const matchCategory = activeCategory === 'TODOS' || category === activeCategory;
         const matchTag = activeTag === null || tags.includes(activeTag);
+        const matchText = terms.every(term => haystack.includes(term));
 
-        if (matchCategory && matchTag) {
+        if (matchCategory && matchTag && matchText) {
           card.classList.remove('hidden');
           visibleCount++;
         } else {
@@ -302,6 +364,11 @@ const allTags = Array.from(
         counterTotal.innerText = visibleCount.toString();
       }
 
+      if (searchStatus) {
+        searchStatus.textContent =
+          visibleCount === 1 ? '1 resultado' : visibleCount + ' resultados';
+      }
+
       if (noResults) {
         if (visibleCount === 0) {
           noResults.classList.remove('hidden');
@@ -309,6 +376,43 @@ const allTags = Array.from(
           noResults.classList.add('hidden');
         }
       }
+    }
+
+    function limpiarFiltros() {
+      activeCategory = 'TODOS';
+      activeTag = null;
+      query = '';
+      if (searchInput) searchInput.value = '';
+
+      catBtns.forEach(b => {
+        const activo = b.dataset.filter === 'TODOS';
+        b.className = activo ? CAT_ON : CAT_OFF;
+        b.setAttribute('aria-pressed', activo ? 'true' : 'false');
+      });
+      tagBtns.forEach(b => {
+        b.className = TAG_OFF;
+        b.setAttribute('aria-pressed', 'false');
+      });
+
+      syncUrl();
+      applyFilters();
+    }
+
+    // Buscador
+    if (searchInput) {
+      searchInput.addEventListener('input', () => {
+        query = searchInput.value.trim();
+        syncUrl();
+        applyFilters();
+      });
+    }
+
+    // Botón "Limpiar filtros"
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        limpiarFiltros();
+        if (searchInput) searchInput.focus();
+      });
     }
 
     // Eventos de botones de categoría
@@ -347,6 +451,14 @@ const allTags = Array.from(
         applyFilters();
       });
     });
+
+    // Si llegas con ?q=algo en la dirección, la búsqueda ya viene aplicada
+    const inicial = new URLSearchParams(window.location.search).get('q');
+    if (inicial && searchInput) {
+      query = inicial.trim();
+      searchInput.value = query;
+      applyFilters();
+    }
   </script>
 </BaseLayout>
 
