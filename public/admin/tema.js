@@ -6,6 +6,7 @@
   barra.setAttribute('aria-hidden', 'true');
   document.body.appendChild(barra);
 
+  // Botón de tema claro / oscuro
   var boton = document.createElement('button');
   boton.type = 'button';
   boton.className = 'panel-tema-btn';
@@ -38,4 +39,22 @@
   });
 
   pintar();
+
+  // Enlace al resumen
+  var enlace = document.createElement('a');
+  enlace.className = 'panel-resumen-btn';
+  enlace.href = '/admin/resumen.html';
+  enlace.setAttribute('aria-label', 'Ver resumen del sitio');
+
+  var iconoResumen = document.createElement('span');
+  iconoResumen.setAttribute('aria-hidden', 'true');
+  iconoResumen.textContent = '📊';
+
+  var textoResumen = document.createElement('span');
+  textoResumen.className = 'panel-resumen-texto';
+  textoResumen.textContent = ' Resumen';
+
+  enlace.appendChild(iconoResumen);
+  enlace.appendChild(textoResumen);
+  document.body.appendChild(enlace);
 })();

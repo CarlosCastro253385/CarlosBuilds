@@ -8,6 +8,11 @@ interface Props {
   type?: 'website' | 'article';
 }
 
+// Contador de visitas (GoatCounter), sin cookies.
+// Cuando crees tu cuenta, escribe aquí tu código. Ejemplo: si tu panel es
+// carlosbuilds.goatcounter.com, el código es 'carlosbuilds'. Vacío = desactivado.
+const GOATCOUNTER_CODE = '';
+
 const {
   title,
   description = 'Mini proyectos, problemas reales y lo que aprendí. Por Carlos Castro.',
@@ -39,6 +44,15 @@ const imagenAbsoluta = image ? new URL(image, Astro.site).href : undefined;
     <meta name="twitter:card" content={imagenAbsoluta ? 'summary_large_image' : 'summary'} />
 
     <slot name="head" />
+
+    {GOATCOUNTER_CODE && (
+      <script
+        is:inline
+        async
+        data-goatcounter={`https://${GOATCOUNTER_CODE}.goatcounter.com/count`}
+        src="https://gc.zgo.at/count.js"
+      ></script>
+    )}
   </head>
   <body class={bodyClass}>
     <slot />
