@@ -55,7 +55,15 @@ const landingCollection = defineCollection({
   }),
 });
 
+const ajustesCollection = defineCollection({
+  type: 'data',
+  schema: z.object({
+    sobre_mi_texto: z.string(),
+  }),
+});
+
 export const collections = {
   blog: blogCollection,
   landing: landingCollection,
+  ajustes: ajustesCollection,
 };

@@ -1,10 +1,21 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import '../../styles/global.css';
 
 // Obtener todos los posts desde src/content/blog/
 const posts = await getCollection('blog');
+
+// Datos editables desde el panel (con valores de respaldo por si falta alguno)
+const ajustes = await getEntry('ajustes', 'blog');
+const landing = await getEntry('landing', 'index');
+
+const sobreMiTexto =
+  ajustes?.data.sobre_mi_texto ??
+  'Hola, soy Carlos. Construyo proyectos web y de backend para entender cosas grandes. Todo lo que aprendo y resuelvo, lo escribo aquí.';
+const contactEmail = landing?.data.contacto_email ?? 'cruzcastro4@gmail.com';
+const githubUrl = landing?.data.github_url ?? 'https://github.com/CarlosCastro253385/';
+const instagramUrl = landing?.data.instagram_url ?? 'https://www.instagram.com/slrc_ttr/';
 
 // Calcular estadísticas reales iniciales
 const totalPosts = posts.length;
@@ -15,9 +26,6 @@ const problemsSolvedCount = posts.filter(p => p.data.category === 'PROBLEMA-RESU
 const allTags = Array.from(
   new Set(posts.flatMap(post => post.data.tags || []))
 );
-
-// Tu correo de contacto
-const contactEmail = 'cruzcastro4@gmail.com';
 ---
 
 <BaseLayout
@@ -65,6 +73,13 @@ const contactEmail = 'cruzcastro4@gmail.com';
 
     <!-- HERO SECTION -->
     <section class="mb-12">
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 min-h-11 sm:min-h-9 mb-6 px-3 rounded border border-slate-800 bg-[#0b1120] text-slate-300 hover:text-cyan-400 hover:border-cyan-400/50 font-mono text-xs transition-all"
+      >
+        <span aria-hidden="true">←</span> Mi página principal
+      </a>
+
       <div class="font-mono text-xs text-cyan-400 mb-3 flex items-center gap-2">
         <span>~ / CarlosBuilds / blog</span>
       </div>
@@ -149,15 +164,15 @@ const contactEmail = 'cruzcastro4@gmail.com';
       <!-- COLUMNA DERECHA: SIDEBAR -->
       <aside class="lg:col-span-4 space-y-6">
 
-        <!-- SOBRE MÍ -->
+        <!-- SOBRE MÍ (editable desde el panel) -->
         <div class="bg-[#0b1120] border border-slate-800/80 rounded-lg p-5">
           <div class="font-mono text-xs text-cyan-400 mb-2">// SOBRE MI</div>
           <p class="text-sm text-slate-400 leading-relaxed mb-4">
-            Hola, soy Carlos. Construyo proyectos web y de backend para entender cosas grandes. Todo lo que aprendo y resuelvo, lo escribo aquí.
+            {sobreMiTexto}
           </p>
           <div class="font-mono text-xs flex flex-wrap gap-x-4 gap-y-1 text-cyan-400">
-            <a href="https://github.com/CarlosCastro253385/" target="_blank" rel="noopener noreferrer" class="hover:underline py-2">GitHub</a>
-            <a href="https://www.instagram.com/slrc_ttr/" target="_blank" rel="noopener noreferrer" class="hover:underline py-2">Instagram</a>
+            <a href={githubUrl} target="_blank" rel="noopener noreferrer" class="hover:underline py-2">GitHub</a>
+            <a href={instagramUrl} target="_blank" rel="noopener noreferrer" class="hover:underline py-2">Instagram</a>
             <button class="copy-email-link hover:underline text-left cursor-pointer py-2" data-email={contactEmail}>Contacto</button>
           </div>
         </div>
@@ -209,6 +224,10 @@ const contactEmail = 'cruzcastro4@gmail.com';
 
   <!-- FOOTER -->
   <footer class="border-t border-slate-800/60 mt-20 py-8 text-center font-mono text-xs text-slate-400">
+    <nav aria-label="Enlaces del sitio" class="mb-4 flex justify-center gap-6">
+      <a href="/" class="hover:text-cyan-400 py-2">Mi página principal</a>
+      <a href="/blog" class="hover:text-cyan-400 py-2">Blog</a>
+    </nav>
     <p>© 2026 CarlosBuilds · El hombre aprende mientras vive · sin cookies, sin trackers</p>
   </footer>
 

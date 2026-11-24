@@ -77,9 +77,9 @@ collections:
               - { label: "Emisor", name: "issuer", widget: "string" }
               - { label: "Año", name: "year", widget: "string" }
 
-          - { label: "Email de contacto", name: "contacto_email", widget: "string" }
-          - { label: "URL de GitHub", name: "github_url", widget: "string" }
-          - { label: "URL de Instagram", name: "instagram_url", widget: "string" }
+          - { label: "Email de contacto", name: "contacto_email", widget: "string", hint: "También se usa en el blog." }
+          - { label: "URL de GitHub", name: "github_url", widget: "string", hint: "También se usa en el blog." }
+          - { label: "URL de Instagram", name: "instagram_url", widget: "string", hint: "También se usa en el blog." }
 
   - name: "blog"
     label: "Entradas del blog"
@@ -104,3 +104,18 @@ collections:
         hint: "Palabras clave cortas: astro, git, github..."
         field: { label: "Etiqueta", name: "tag", widget: "string" }
       - { label: "Contenido", name: "body", widget: "markdown" }
+
+  - name: "ajustes_blog"
+    label: "Sobre mí (blog)"
+    description: "El recuadro «Sobre mí» que aparece al lado de tus entradas."
+    delete: false
+    editor:
+      preview: false
+    files:
+      - file: "src/content/ajustes/blog.json"
+        label: "Texto de «Sobre mí»"
+        name: "blog_ajustes"
+        extension: "json"
+        format: "json"
+        fields:
+          - { label: "Texto", name: "sobre_mi_texto", widget: "text", hint: "Dos o tres frases. Los enlaces de GitHub, Instagram y correo se editan en «Página principal»." }
