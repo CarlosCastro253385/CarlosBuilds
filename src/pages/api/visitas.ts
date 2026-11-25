@@ -95,12 +95,11 @@ export const GET: APIRoute = async ({ request, url }) => {
   const q = (a: Date, b: Date) =>
     `start=${encodeURIComponent(iso(a))}&end=${encodeURIComponent(iso(b))}`;
 
-  // 4) Consulta: periodo actual, visitas por día y periodo anterior
+// 4) Consulta: periodo actual (incluye total y desglose diario) y periodo anterior
   try {
-    const [totalActual, hitsActual, totalAnterior] = await Promise.all([
-      pedir(`/stats/total?${q(inicio, fin)}`),
-      pedir(`/stats/hits?${q(inicio, fin)}&daily=1&limit=10`),
-      pedir(`/stats/total?${q(inicioAnterior, inicio)}`),
+    const [hitsActual, hitsAnterior] = await Promise.all([
+      pedir(`/stats/hits?${q(inicio, fin)}&daily=true&limit=10`),
+      pedir(`/stats/hits?${q(inicioAnterior, inicio)}&limit=1`),
     ]);
 
     return json(
@@ -111,14 +110,13 @@ export const GET: APIRoute = async ({ request, url }) => {
           fin: iso(fin),
           inicioAnterior: iso(inicioAnterior),
         },
-        totalActual,
+        totalActual: { total: hitsActual?.total ?? 0 },
         hitsActual,
-        totalAnterior,
+        totalAnterior: { total: hitsAnterior?.total ?? 0 },
       },
       200,
       true
     );
   } catch (e) {
     return json({ error: e instanceof Error ? e.message : 'No se pudo consultar GoatCounter.' }, 502);
-  }
-};
+  }}
