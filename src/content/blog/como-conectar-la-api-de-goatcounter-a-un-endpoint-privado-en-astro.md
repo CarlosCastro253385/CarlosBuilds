@@ -51,3 +51,26 @@ async function tieneAcceso(token: string): Promise<boolean> {
     return false;
   }
 }
+```
+
+3. El detalle técnico de la API v0 de GoatCounter
+Un error habitual al trabajar con la API v0 de GoatCounter es intentar consultar un endpoint inexistente como /api/v0/stats/total, lo que devuelve un código 404 Not Found aunque tu token tenga todos los permisos activos.
+
+En la arquitectura de GoatCounter, las métricas se consultan por categoría (/stats/hits, /stats/browsers, /stats/systems), y el endpoint /api/v0/stats/hits ya incluye tanto el desglose por ruta y día como el conteo global en la propiedad total:
+```
+const base = `https://${GC_CODE}[.goatcounter.com/api/v0](https://.goatcounter.com/api/v0)`;
+
+async function pedir(ruta: string, gcToken: string) {
+  const res = await fetch(base + ruta, {
+    headers: {
+      Authorization: `Bearer ${gcToken}`,
+      Accept: 'application/json',
+    },
+  });
+  if (!res.ok) {
+    throw new Error(`GoatCounter respondió ${res.status}`);
+  }
+  return res.json();
+}
+```
+Además, GoatCounter exige que las fechas start y end estén en formato ISO 8601 redondeadas a la hora exacta (YYYY-MM-DDTHH:00:00Z). Al ejecutar en paralelo con Promise.all la consulta del periodo actual (&daily=true&limit=10) y la del periodo anterior equivalente, obtenemos en menos de 300 milisegundos todo lo necesario para calcular porcentajes de crecimiento, renderizar gráficas diarias y listar las páginas más visitadas sin comprometer la seguridad del sitio.
