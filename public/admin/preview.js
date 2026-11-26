@@ -179,5 +179,6 @@
   });
 
   CMS.registerPreviewTemplate('landing_content', LandingPreview);
-  CMS.registerPreviewTemplate('blog', BlogPreview);
+  CMS.registerPreviewTemplate('mini_proyectos', BlogPreview);
+  CMS.registerPreviewTemplate('problemas_resueltos', BlogPreview);
 })();

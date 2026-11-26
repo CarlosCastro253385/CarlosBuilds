@@ -81,21 +81,19 @@ collections:
           - { label: "URL de GitHub", name: "github_url", widget: "string", hint: "También se usa en el blog." }
           - { label: "URL de Instagram", name: "instagram_url", widget: "string", hint: "También se usa en el blog." }
 
-  - name: "blog"
-    label: "Entradas del blog"
-    label_singular: "entrada"
-    description: "Mini proyectos y problemas resueltos que aparecen en tu blog."
+  - name: "mini_proyectos"
+    label: "Mini proyectos"
+    label_singular: "mini proyecto"
+    description: "Cosas que construiste. La entrada nueva ya trae una estructura para llenar."
     folder: "src/content/blog"
+    filter: { field: "category", value: "MINI-PROYECTO" }
     create: true
     slug: "{{slug}}"
     summary: "{{title}}"
-    sortable_fields: ["date", "title", "category"]
-    view_filters:
-      - { label: "Mini proyectos", field: "category", pattern: "MINI-PROYECTO" }
-      - { label: "Problemas resueltos", field: "category", pattern: "PROBLEMA-RESUELTO" }
+    sortable_fields: ["date", "title"]
     fields:
       - { label: "Título", name: "title", widget: "string" }
-      - { label: "Categoría", name: "category", widget: "select", options: ["MINI-PROYECTO", "PROBLEMA-RESUELTO"], default: "MINI-PROYECTO" }
+      - { label: "Categoría", name: "category", widget: "hidden", default: "MINI-PROYECTO" }
       - { label: "Resumen", name: "summary", widget: "text", hint: "Una o dos frases. Se ve en la tarjeta del blog y al compartir el enlace." }
       - { label: "Fecha", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, default: "{{now}}" }
       - label: "Etiquetas"
@@ -103,7 +101,67 @@ collections:
         widget: "list"
         hint: "Palabras clave cortas: astro, git, github..."
         field: { label: "Etiqueta", name: "tag", widget: "string" }
-      - { label: "Contenido", name: "body", widget: "markdown" }
+      - label: "Contenido"
+        name: "body"
+        widget: "markdown"
+        default: |
+          ## ¿Qué construí?
+
+          Cuenta en dos o tres frases qué hiciste y para qué sirve.
+
+          ## Tecnologías
+
+          - 
+
+          ## Cómo lo hice
+
+          1. 
+          2. 
+          3. 
+
+          ## Qué aprendí
+
+          ## Código o enlace
+
+  - name: "problemas_resueltos"
+    label: "Problemas resueltos"
+    label_singular: "problema resuelto"
+    description: "Errores que arreglaste. La entrada nueva ya trae una estructura para llenar."
+    folder: "src/content/blog"
+    filter: { field: "category", value: "PROBLEMA-RESUELTO" }
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}}"
+    sortable_fields: ["date", "title"]
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Categoría", name: "category", widget: "hidden", default: "PROBLEMA-RESUELTO" }
+      - { label: "Resumen", name: "summary", widget: "text", hint: "Una o dos frases. Se ve en la tarjeta del blog y al compartir el enlace." }
+      - { label: "Fecha", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, default: "{{now}}" }
+      - label: "Etiquetas"
+        name: "tags"
+        widget: "list"
+        hint: "Palabras clave cortas: astro, git, github..."
+        field: { label: "Etiqueta", name: "tag", widget: "string" }
+      - label: "Contenido"
+        name: "body"
+        widget: "markdown"
+        default: |
+          ## El problema
+
+          Describe qué pasaba y copia el mensaje de error exacto.
+
+          ## Qué intenté
+
+          - 
+
+          ## La solución
+
+          Explica el arreglo paso a paso.
+
+          ## Por qué funciona
+
+          ## Para no repetirlo
 
   - name: "ajustes_blog"
     label: "Sobre mí (blog)"
