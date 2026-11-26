@@ -34,6 +34,14 @@ function iso(fecha: Date): string {
   return d.toISOString().replace('.000Z', 'Z');
 }
 
+function decodificar(texto: string): string {
+  try {
+    return decodeURIComponent(texto);
+  } catch {
+    return texto;
+  }
+}
+
 // Comprueba con GitHub que el token de sesión es de alguien que puede escribir en tu repo
 async function tieneAcceso(token: string): Promise<boolean> {
   try {
@@ -50,6 +58,41 @@ async function tieneAcceso(token: string): Promise<boolean> {
   } catch {
     return false;
   }
+}
+
+// Reduce la respuesta de GoatCounter a lo que necesita el tablero
+function resumir(datos: any) {
+  const hits: any[] = Array.isArray(datos?.hits)
+    ? datos.hits.filter((h: any) => !h?.event)
+    : [];
+
+  // Visitas por día, sumando todas las páginas (solo se usa el campo "daily")
+  const porDia = new Map<string, number>();
+  for (const h of hits) {
+    const dias: any[] = Array.isArray(h?.stats) ? h.stats : [];
+    for (const s of dias) {
+      porDia.set(s.day, (porDia.get(s.day) ?? 0) + (Number(s.daily) || 0));
+    }
+  }
+
+  const diario = Array.from(porDia.entries())
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([dia, visitas]) => ({ dia, visitas }));
+
+  const paginas = hits
+    .map((h: any) => ({
+      ruta: decodificar(String(h?.path ?? '')),
+      titulo: String(h?.title ?? ''),
+      visitas: Number(h?.count) || 0,
+    }))
+    .sort((a, b) => b.visitas - a.visitas);
+
+  return {
+    total: Number(datos?.total) || 0,
+    diario,
+    paginas,
+    hayMas: Boolean(datos?.more),
+  };
 }
 
 export const GET: APIRoute = async ({ request, url }) => {
@@ -95,28 +138,32 @@ export const GET: APIRoute = async ({ request, url }) => {
   const q = (a: Date, b: Date) =>
     `start=${encodeURIComponent(iso(a))}&end=${encodeURIComponent(iso(b))}`;
 
-// 4) Consulta: periodo actual (incluye total y desglose diario) y periodo anterior
+  // 4) Consulta: periodo actual (con desglose diario) y periodo anterior (solo el total)
   try {
     const [hitsActual, hitsAnterior] = await Promise.all([
-      pedir(`/stats/hits?${q(inicio, fin)}&daily=true&limit=10`),
+      pedir(`/stats/hits?${q(inicio, fin)}&daily=true&limit=100`),
       pedir(`/stats/hits?${q(inicioAnterior, inicio)}&limit=1`),
     ]);
 
     return json(
       {
         periodo,
+        dias,
         rango: {
           inicio: iso(inicio),
           fin: iso(fin),
           inicioAnterior: iso(inicioAnterior),
         },
-        totalActual: { total: hitsActual?.total ?? 0 },
-        hitsActual,
-        totalAnterior: { total: hitsAnterior?.total ?? 0 },
+        actual: resumir(hitsActual),
+        anterior: { total: Number(hitsAnterior?.total) || 0 },
       },
       200,
       true
     );
   } catch (e) {
-    return json({ error: e instanceof Error ? e.message : 'No se pudo consultar GoatCounter.' }, 502);
-  }}
+    return json(
+      { error: e instanceof Error ? e.message : 'No se pudo consultar GoatCounter.' },
+      502
+    );
+  }
+};

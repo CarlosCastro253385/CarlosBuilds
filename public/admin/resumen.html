@@ -15,6 +15,8 @@
         --suave: #94a3b8;
         --cian: #00f2fe;
         --morado: #7928ca;
+        --verde: #34d399;
+        --rojo: #fb7185;
       }
 
       * {
@@ -55,7 +57,7 @@
         justify-content: space-between;
         align-items: flex-end;
         gap: 16px;
-        margin-bottom: 28px;
+        margin-bottom: 20px;
       }
 
       .etiqueta {
@@ -70,10 +72,46 @@
         line-height: 1.2;
       }
 
-      .acciones {
+      h2.seccion {
+        margin: 36px 0 14px;
+        font-size: 1.3rem;
+        color: #fff;
+      }
+
+      h3 {
+        font-size: 1.05rem;
+        color: #fff;
+      }
+
+      .acciones,
+      .fila-sitio,
+      .periodos,
+      .exportar {
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
+        align-items: center;
+      }
+
+      .fila-sitio {
+        margin-bottom: 8px;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        min-height: 44px;
+        padding: 0 16px;
+        border: 1px solid var(--borde);
+        border-radius: 999px;
+        background: var(--card);
+        font-size: 0.9rem;
+        color: var(--suave);
+      }
+
+      .chip strong {
+        color: #fff;
       }
 
       .btn {
@@ -86,34 +124,76 @@
         border-radius: 999px;
         background: var(--card);
         color: #fff;
+        font: inherit;
         font-size: 0.9rem;
         font-weight: 600;
         text-decoration: none;
+        cursor: pointer;
         transition: border-color 0.2s ease, color 0.2s ease;
       }
 
-      .btn:hover {
+      .btn:hover:not([disabled]) {
         border-color: var(--cian);
         color: var(--cian);
       }
 
-      a:focus-visible {
+      .btn[disabled] {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+
+      .btn.chico {
+        min-height: 40px;
+        padding: 0 14px;
+        font-size: 0.85rem;
+      }
+
+      .btn-periodo {
+        min-height: 44px;
+        padding: 0 16px;
+        border: 1px solid var(--borde);
+        border-radius: 10px;
+        background: var(--card);
+        color: var(--texto);
+        font: inherit;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .btn-periodo:hover {
+        border-color: var(--cian);
+      }
+
+      .btn-periodo[aria-pressed="true"] {
+        border-color: var(--cian);
+        background: var(--cian);
+        color: #04111a;
+      }
+
+      a:focus-visible,
+      button:focus-visible,
+      summary:focus-visible {
         outline: 2px solid var(--cian);
         outline-offset: 3px;
         border-radius: 4px;
       }
 
       .estado {
-        margin-bottom: 20px;
+        margin: 14px 0 18px;
         font-size: 0.9rem;
         color: var(--suave);
       }
 
+      .estado a {
+        color: var(--cian);
+      }
+
       .tarjetas {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
         gap: 14px;
-        margin-bottom: 24px;
+        margin-bottom: 20px;
       }
 
       .tarjeta {
@@ -132,13 +212,134 @@
       }
 
       .tarjeta .num.chico {
-        font-size: 1.25rem;
-        padding-top: 0.55rem;
+        font-size: 1.05rem;
+        font-weight: 700;
+        line-height: 1.35;
+        padding-top: 0.35rem;
+        overflow-wrap: anywhere;
       }
 
       .tarjeta .nombre {
         margin-top: 6px;
         font-size: 0.85rem;
+        color: var(--suave);
+      }
+
+      .delta {
+        margin-top: 6px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .delta.sube {
+        color: var(--verde);
+      }
+
+      .delta.baja {
+        color: var(--rojo);
+      }
+
+      .delta.neutro {
+        color: var(--suave);
+        font-weight: 400;
+      }
+
+      .panel {
+        margin-bottom: 20px;
+        padding: 20px;
+        border: 1px solid var(--borde);
+        border-radius: 14px;
+        background: var(--card);
+      }
+
+      .panel-cabecera {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .suave {
+        font-size: 0.85rem;
+        color: var(--suave);
+      }
+
+      .grafica svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .vacio {
+        padding: 12px 0;
+        font-size: 0.9rem;
+        color: var(--suave);
+      }
+
+      details.datos {
+        margin-top: 12px;
+        font-size: 0.9rem;
+      }
+
+      details.datos summary {
+        cursor: pointer;
+        color: var(--suave);
+      }
+
+      details.datos table {
+        width: 100%;
+        margin-top: 10px;
+        border-collapse: collapse;
+      }
+
+      details.datos th,
+      details.datos td {
+        padding: 6px 8px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        text-align: left;
+      }
+
+      .lista {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        list-style: none;
+      }
+
+      .pagina-fila {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 6px 12px;
+        align-items: baseline;
+      }
+
+      .pagina-fila .tag-barra {
+        grid-column: 1 / -1;
+      }
+
+      .pagina-info {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+
+      .pagina-titulo {
+        font-weight: 600;
+        color: #fff;
+        overflow-wrap: anywhere;
+      }
+
+      .pagina-ruta {
+        font-size: 0.8rem;
+        color: var(--suave);
+        overflow-wrap: anywhere;
+      }
+
+      .nota {
+        margin-top: 14px;
+        font-size: 0.8rem;
         color: var(--suave);
       }
 
@@ -154,24 +355,12 @@
         }
       }
 
-      .panel {
-        padding: 20px;
-        border: 1px solid var(--borde);
-        border-radius: 14px;
-        background: var(--card);
-      }
-
-      .panel h2 {
+      .panel h3 {
         margin-bottom: 14px;
-        font-size: 1.05rem;
-        color: #fff;
       }
 
-      .lista {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        list-style: none;
+      .panel-cabecera h3 {
+        margin-bottom: 0;
       }
 
       .tag-fila {
@@ -224,11 +413,6 @@
         color: var(--suave);
       }
 
-      .vacio {
-        font-size: 0.9rem;
-        color: var(--suave);
-      }
-
       @media (prefers-reduced-motion: reduce) {
         * {
           transition: none !important;
@@ -248,13 +432,80 @@
         <nav class="acciones" aria-label="Accesos">
           <a class="btn" href="/admin/">✏️ Ir al editor</a>
           <a class="btn" href="/blog">📝 Ver blog</a>
-          <a class="btn" id="btn-visitas" href="#" target="_blank" rel="noopener noreferrer" hidden>📈 Ver visitas</a>
+          <a class="btn" id="btn-visitas" href="#" target="_blank" rel="noopener noreferrer" hidden>📈 Ver en GoatCounter</a>
         </nav>
       </header>
 
-      <p id="estado" class="estado" role="status">Cargando datos…</p>
+      <div class="fila-sitio">
+        <span class="chip">Sitio administrado: <strong>carlos-builds.vercel.app</strong></span>
+        <button class="btn" type="button" disabled aria-disabled="true">+ Sitio · próximamente</button>
+      </div>
 
-      <section id="tarjetas" class="tarjetas" aria-label="Totales" hidden>
+      <!-- ===== VISITAS ===== -->
+      <h2 class="seccion">Visitas</h2>
+
+      <div class="periodos" id="grupo-periodos" role="group" aria-label="Periodo de tiempo"></div>
+      <p id="estado-visitas" class="estado" role="status">Cargando visitas…</p>
+
+      <div id="visitas-contenido" hidden>
+        <div class="tarjetas">
+          <div class="tarjeta">
+            <div class="num" id="k-total">0</div>
+            <div class="nombre">visitas</div>
+            <div class="delta neutro" id="k-delta"></div>
+          </div>
+          <div class="tarjeta">
+            <div class="num" id="k-promedio">0</div>
+            <div class="nombre">promedio por día</div>
+          </div>
+          <div class="tarjeta">
+            <div class="num chico" id="k-mejor">—</div>
+            <div class="nombre">mejor día</div>
+          </div>
+          <div class="tarjeta">
+            <div class="num chico" id="k-pagina">—</div>
+            <div class="nombre">página más vista</div>
+          </div>
+          <div class="tarjeta">
+            <div class="num" id="k-distintas">0</div>
+            <div class="nombre">páginas distintas visitadas</div>
+          </div>
+        </div>
+
+        <section class="panel" aria-labelledby="t-grafica">
+          <div class="panel-cabecera">
+            <h3 id="t-grafica">Visitas por día</h3>
+            <div class="exportar">
+              <span class="suave">Exportar CSV:</span>
+              <button class="btn chico" id="btn-csv-dias" type="button" disabled>⬇ por día</button>
+              <button class="btn chico" id="btn-csv-paginas" type="button" disabled>⬇ por página</button>
+            </div>
+          </div>
+          <div id="grafica" class="grafica"></div>
+          <p id="sin-visitas" class="vacio" hidden>Aún no hay visitas en este periodo.</p>
+          <details class="datos">
+            <summary>Ver datos en tabla</summary>
+            <table>
+              <thead>
+                <tr><th scope="col">Fecha</th><th scope="col">Visitas</th></tr>
+              </thead>
+              <tbody id="tabla-grafica"></tbody>
+            </table>
+          </details>
+        </section>
+
+        <section class="panel" aria-labelledby="t-paginas">
+          <h3 id="t-paginas">Páginas más vistas</h3>
+          <ul class="lista" id="lista-paginas"></ul>
+          <p class="nota">El total suma las visitas de cada página: si una persona entra a tres páginas, cuentan tres. Datos de GoatCounter, sin cookies.</p>
+        </section>
+      </div>
+
+      <!-- ===== CONTENIDO ===== -->
+      <h2 class="seccion">Contenido del sitio</h2>
+      <p id="estado-contenido" class="estado" role="status">Cargando datos…</p>
+
+      <section id="tarjetas" class="tarjetas" aria-label="Totales de contenido" hidden>
         <div class="tarjeta"><div class="num" id="n-total">0</div><div class="nombre">entradas publicadas</div></div>
         <div class="tarjeta"><div class="num" id="n-mini">0</div><div class="nombre">mini proyectos</div></div>
         <div class="tarjeta"><div class="num" id="n-problemas">0</div><div class="nombre">problemas resueltos</div></div>
@@ -264,11 +515,11 @@
 
       <div id="detalle" class="columnas" hidden>
         <section class="panel" aria-labelledby="t-tags">
-          <h2 id="t-tags">Etiquetas más usadas</h2>
+          <h3 id="t-tags">Etiquetas más usadas</h3>
           <ul class="lista" id="lista-tags"></ul>
         </section>
         <section class="panel" aria-labelledby="t-ultimas">
-          <h2 id="t-ultimas">Últimas entradas</h2>
+          <h3 id="t-ultimas">Últimas entradas</h3>
           <ul class="lista" id="lista-ultimas"></ul>
         </section>
       </div>
@@ -276,31 +527,24 @@
 
     <script>
       (function () {
-        // Cuando tengas tu cuenta de GoatCounter, escribe aquí tu código
-        // (la parte antes de ".goatcounter.com"). Vacío = el botón no aparece.
+        // Tu código de GoatCounter (la parte antes de ".goatcounter.com")
         var GOATCOUNTER_CODE = 'carlosbuilds';
 
-        var estado = document.getElementById('estado');
-        var tarjetas = document.getElementById('tarjetas');
-        var detalle = document.getElementById('detalle');
-        var listaTags = document.getElementById('lista-tags');
-        var listaUltimas = document.getElementById('lista-ultimas');
-        var btnVisitas = document.getElementById('btn-visitas');
+        var PERIODOS = [
+          { clave: '1d', etiqueta: '1 día', dias: 1 },
+          { clave: '7d', etiqueta: '1 semana', dias: 7 },
+          { clave: '14d', etiqueta: '2 semanas', dias: 14 },
+          { clave: '30d', etiqueta: '1 mes', dias: 30 },
+          { clave: '90d', etiqueta: '3 meses', dias: 90 },
+          { clave: '365d', etiqueta: '1 año', dias: 365 }
+        ];
 
-        if (GOATCOUNTER_CODE) {
-          btnVisitas.href = 'https://' + GOATCOUNTER_CODE + '.goatcounter.com';
-          btnVisitas.hidden = false;
-        }
+        var periodoActual = '7d';
+        var ultimoDato = null;
+        var numeroPedido = 0;
 
-        function pedir(url) {
-          return fetch(url).then(function (r) {
-            if (!r.ok) throw new Error('Error ' + r.status);
-            return r.json();
-          });
-        }
-
-        function poner(id, valor) {
-          document.getElementById(id).textContent = String(valor);
+        function $(id) {
+          return document.getElementById(id);
         }
 
         function crear(etiqueta, clase, texto) {
@@ -310,80 +554,497 @@
           return el;
         }
 
-        Promise.all([pedir('/api/stats'), pedir('/api/posts')])
-          .then(function (res) {
-            var m = (res[0] && res[0].metrics) || {};
-            var posts = ((res[1] && res[1].data) || []).slice();
-
-            // Más recientes primero (las fechas son AAAA-MM-DD)
-            posts.sort(function (a, b) {
-              return String(b.date).localeCompare(String(a.date));
-            });
-
-            poner('n-total', m.totalPosts != null ? m.totalPosts : posts.length);
-            poner('n-mini', m.miniProjects != null ? m.miniProjects : 0);
-            poner('n-problemas', m.problemsSolved != null ? m.problemsSolved : 0);
-            poner('n-tags', m.totalTags != null ? m.totalTags : 0);
-            poner('n-ultima', posts.length ? posts[0].date : '—');
-
-            // Etiquetas más usadas
-            var conteo = {};
-            posts.forEach(function (p) {
-              (p.tags || []).forEach(function (t) {
-                conteo[t] = (conteo[t] || 0) + 1;
-              });
-            });
-            var top = Object.keys(conteo)
-              .map(function (t) {
-                return { tag: t, n: conteo[t] };
-              })
-              .sort(function (a, b) {
-                return b.n - a.n || a.tag.localeCompare(b.tag);
-              })
-              .slice(0, 8);
-
-            if (top.length === 0) {
-              listaTags.appendChild(crear('li', 'vacio', 'Todavía no hay etiquetas.'));
-            } else {
-              var maximo = top[0].n;
-              top.forEach(function (item) {
-                var fila = crear('li', 'tag-fila');
-                var barra = crear('div', 'tag-barra');
-                var relleno = document.createElement('span');
-                relleno.style.width = Math.round((item.n / maximo) * 100) + '%';
-                barra.appendChild(relleno);
-                fila.appendChild(crear('span', 'tag-nombre', '#' + item.tag));
-                fila.appendChild(barra);
-                fila.appendChild(crear('span', 'tag-cuenta', item.n));
-                listaTags.appendChild(fila);
-              });
-            }
-
-            // Últimas entradas
-            if (posts.length === 0) {
-              listaUltimas.appendChild(crear('li', 'vacio', 'Todavía no hay entradas.'));
-            } else {
-              posts.slice(0, 5).forEach(function (p) {
-                var li = crear('li', 'entrada');
-                var enlace = crear('a', '', p.title);
-                enlace.href = '/blog/' + encodeURIComponent(p.slug);
-                li.appendChild(enlace);
-                li.appendChild(crear('small', '', p.category + ' · ' + p.date));
-                listaUltimas.appendChild(li);
-              });
-            }
-
-            tarjetas.hidden = false;
-            detalle.hidden = false;
-            estado.textContent =
-              'Datos de tu sitio publicado. Actualizado a las ' +
-              new Date().toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' }) +
-              '.';
-          })
-          .catch(function () {
-            estado.textContent =
-              'No se pudieron cargar los datos. Revisa tu conexión y recarga la página.';
+        function svgEl(nombre, atributos) {
+          var el = document.createElementNS('http://www.w3.org/2000/svg', nombre);
+          Object.keys(atributos || {}).forEach(function (k) {
+            el.setAttribute(k, atributos[k]);
           });
+          return el;
+        }
+
+        function numero(n) {
+          return Number(n || 0).toLocaleString('es-MX');
+        }
+
+        function fechaCorta(dia) {
+          var f = new Date(dia + 'T12:00:00');
+          return isNaN(f.getTime())
+            ? dia
+            : f.toLocaleDateString('es-MX', { day: 'numeric', month: 'short' });
+        }
+
+        function nombreDePeriodo(clave) {
+          for (var i = 0; i < PERIODOS.length; i++) {
+            if (PERIODOS[i].clave === clave) return PERIODOS[i].etiqueta;
+          }
+          return clave;
+        }
+
+        // ---------- Botón a GoatCounter ----------
+        if (GOATCOUNTER_CODE) {
+          $('btn-visitas').href = 'https://' + GOATCOUNTER_CODE + '.goatcounter.com';
+          $('btn-visitas').hidden = false;
+        }
+
+        // ---------- Botones de periodo ----------
+        var botonesPeriodo = [];
+        PERIODOS.forEach(function (p) {
+          var b = crear('button', 'btn-periodo', p.etiqueta);
+          b.type = 'button';
+          b.addEventListener('click', function () {
+            periodoActual = p.clave;
+            marcarPeriodo();
+            cargarVisitas();
+          });
+          botonesPeriodo.push({ clave: p.clave, el: b });
+          $('grupo-periodos').appendChild(b);
+        });
+
+        function marcarPeriodo() {
+          botonesPeriodo.forEach(function (b) {
+            b.el.setAttribute('aria-pressed', b.clave === periodoActual ? 'true' : 'false');
+          });
+        }
+        marcarPeriodo();
+
+        // ---------- Sesión del panel ----------
+        function tokenDeSesion() {
+          try {
+            var bruto =
+              localStorage.getItem('decap-cms-user') || localStorage.getItem('netlify-cms-user');
+            if (!bruto) return null;
+            var usuario = JSON.parse(bruto);
+            return usuario && usuario.token ? usuario.token : null;
+          } catch (e) {
+            return null;
+          }
+        }
+
+        // ---------- Visitas ----------
+        function cargarVisitas() {
+          var estado = $('estado-visitas');
+          var contenido = $('visitas-contenido');
+          var token = tokenDeSesion();
+
+          if (!token) {
+            estado.textContent = 'Para ver las visitas, inicia sesión en el panel y vuelve aquí. ';
+            var enlace = crear('a', '', 'Ir al panel');
+            enlace.href = '/admin/';
+            estado.appendChild(enlace);
+            contenido.hidden = true;
+            return;
+          }
+
+          estado.textContent = 'Cargando visitas…';
+          var pedido = ++numeroPedido;
+
+          fetch('/api/visitas?periodo=' + encodeURIComponent(periodoActual), {
+            headers: { Authorization: 'Bearer ' + token }
+          })
+            .then(function (r) {
+              return r
+                .json()
+                .catch(function () {
+                  return {};
+                })
+                .then(function (cuerpo) {
+                  if (!r.ok) throw new Error(cuerpo.error || 'Error ' + r.status);
+                  return cuerpo;
+                });
+            })
+            .then(function (datos) {
+              if (pedido !== numeroPedido) return;
+              ultimoDato = datos;
+              pintarVisitas(datos);
+              estado.textContent =
+                'Datos de GoatCounter · ' +
+                nombreDePeriodo(datos.periodo) +
+                ' · actualizado a las ' +
+                new Date().toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' }) +
+                '.';
+            })
+            .catch(function (e) {
+              if (pedido !== numeroPedido) return;
+              contenido.hidden = true;
+              estado.textContent = 'No se pudieron cargar las visitas: ' + e.message;
+            });
+        }
+
+        function pintarVisitas(datos) {
+          var actual = datos.actual || {};
+          var total = actual.total || 0;
+          var anterior = (datos.anterior && datos.anterior.total) || 0;
+          var dias = datos.dias || 1;
+          var diario = actual.diario || [];
+          var paginas = actual.paginas || [];
+
+          $('k-total').textContent = numero(total);
+
+          var delta = $('k-delta');
+          delta.className = 'delta';
+          if (anterior > 0) {
+            var cambio = ((total - anterior) / anterior) * 100;
+            var flecha = cambio > 0 ? '▲ +' : cambio < 0 ? '▼ ' : '';
+            delta.textContent = flecha + cambio.toFixed(1) + '% vs periodo anterior';
+            delta.classList.add(cambio > 0 ? 'sube' : cambio < 0 ? 'baja' : 'neutro');
+          } else {
+            delta.textContent = total > 0 ? 'sin visitas en el periodo anterior' : 'sin datos aún';
+            delta.classList.add('neutro');
+          }
+
+          $('k-promedio').textContent = (Math.round((total / dias) * 10) / 10).toLocaleString('es-MX');
+
+          var mejor = null;
+          diario.forEach(function (x) {
+            if (!mejor || x.visitas > mejor.visitas) mejor = x;
+          });
+          $('k-mejor').textContent =
+            mejor && mejor.visitas > 0 ? fechaCorta(mejor.dia) + ' · ' + numero(mejor.visitas) : '—';
+
+          var primera = paginas[0];
+          $('k-pagina').textContent =
+            primera && primera.visitas > 0
+              ? (primera.titulo || primera.ruta) + ' · ' + numero(primera.visitas)
+              : '—';
+
+          $('k-distintas').textContent = numero(
+            paginas.filter(function (p) {
+              return p.visitas > 0;
+            }).length
+          );
+
+          dibujarGrafica(diario);
+          pintarPaginas(paginas);
+
+          $('btn-csv-dias').disabled = false;
+          $('btn-csv-paginas').disabled = false;
+          $('visitas-contenido').hidden = false;
+        }
+
+        // Suma las visitas por bloques (se usa en periodos largos)
+        function agrupar(diario, tam) {
+          var salida = [];
+          for (var i = 0; i < diario.length; i += tam) {
+            var bloque = diario.slice(i, i + tam);
+            var suma = 0;
+            bloque.forEach(function (x) {
+              suma += x.visitas;
+            });
+            var primero = bloque[0].dia;
+            var finBloque = bloque[bloque.length - 1].dia;
+            salida.push({
+              etiqueta: primero + ' a ' + finBloque,
+              corta: fechaCorta(primero),
+              visitas: suma
+            });
+          }
+          return salida;
+        }
+
+        function dibujarGrafica(diario) {
+          var cont = $('grafica');
+          var tbody = $('tabla-grafica');
+          var sinVisitas = $('sin-visitas');
+          cont.textContent = '';
+          tbody.textContent = '';
+
+          var porSemana = diario.length > 100;
+          $('t-grafica').textContent = porSemana ? 'Visitas por semana' : 'Visitas por día';
+
+          var puntos = porSemana
+            ? agrupar(diario, 7)
+            : diario.map(function (x) {
+                return { etiqueta: x.dia, corta: fechaCorta(x.dia), visitas: x.visitas };
+              });
+
+          var suma = 0;
+          puntos.forEach(function (p) {
+            suma += p.visitas;
+          });
+
+          if (!puntos.length || suma === 0) {
+            sinVisitas.hidden = false;
+            return;
+          }
+          sinVisitas.hidden = true;
+
+          // Tabla alternativa
+          puntos.forEach(function (p) {
+            var fila = crear('tr');
+            fila.appendChild(crear('td', '', p.etiqueta));
+            fila.appendChild(crear('td', '', numero(p.visitas)));
+            tbody.appendChild(fila);
+          });
+
+          // Gráfica de barras (SVG)
+          var ancho = 900;
+          var alto = 260;
+          var mIzq = 40;
+          var mDer = 10;
+          var mSup = 12;
+          var mInf = 30;
+          var areaAncho = ancho - mIzq - mDer;
+          var areaAlto = alto - mSup - mInf;
+          var base = mSup + areaAlto;
+
+          var maximo = 1;
+          puntos.forEach(function (p) {
+            if (p.visitas > maximo) maximo = p.visitas;
+          });
+
+          var paso = areaAncho / puntos.length;
+          var anchoBarra = Math.max(Math.min(paso * 0.7, 48), 2);
+
+          var svg = svgEl('svg', {
+            viewBox: '0 0 ' + ancho + ' ' + alto,
+            role: 'img',
+            'aria-label': 'Gráfica de barras de visitas. Total: ' + numero(suma) + ' visitas.',
+            preserveAspectRatio: 'xMidYMid meet'
+          });
+
+          var defs = svgEl('defs');
+          var grad = svgEl('linearGradient', { id: 'grad-barras', x1: 0, y1: 0, x2: 0, y2: 1 });
+          grad.appendChild(svgEl('stop', { offset: '0%', 'stop-color': '#00f2fe' }));
+          grad.appendChild(svgEl('stop', { offset: '100%', 'stop-color': '#7928ca' }));
+          defs.appendChild(grad);
+          svg.appendChild(defs);
+
+          var marcas = maximo >= 4 ? [0, 0.5, 1] : [0, 1];
+          marcas.forEach(function (f) {
+            var y = base - areaAlto * f;
+            svg.appendChild(
+              svgEl('line', {
+                x1: mIzq,
+                x2: ancho - mDer,
+                y1: y,
+                y2: y,
+                stroke: 'rgba(255,255,255,0.12)'
+              })
+            );
+            var t = svgEl('text', {
+              x: mIzq - 8,
+              y: y + 4,
+              'text-anchor': 'end',
+              fill: '#94a3b8',
+              'font-size': 12
+            });
+            t.textContent = String(Math.round(maximo * f));
+            svg.appendChild(t);
+          });
+
+          puntos.forEach(function (p, i) {
+            var alturaBarra = p.visitas > 0 ? Math.max((p.visitas / maximo) * areaAlto, 2) : 0;
+            var x = mIzq + paso * i + (paso - anchoBarra) / 2;
+            var barra = svgEl('rect', {
+              x: x,
+              y: base - alturaBarra,
+              width: anchoBarra,
+              height: alturaBarra,
+              rx: 2,
+              fill: 'url(#grad-barras)'
+            });
+            var titulo = svgEl('title');
+            titulo.textContent =
+              p.etiqueta + ': ' + numero(p.visitas) + (p.visitas === 1 ? ' visita' : ' visitas');
+            barra.appendChild(titulo);
+            svg.appendChild(barra);
+          });
+
+          // Fechas en el eje: primera, central y última
+          var ultimoIndice = puntos.length - 1;
+          var indices = [0];
+          if (ultimoIndice > 1) indices.push(Math.floor(ultimoIndice / 2));
+          if (ultimoIndice > 0) indices.push(ultimoIndice);
+
+          indices.forEach(function (i) {
+            var esPrimero = i === 0;
+            var esUltimo = i === ultimoIndice && ultimoIndice > 0;
+            var t = svgEl('text', {
+              x: esPrimero ? mIzq : esUltimo ? ancho - mDer : mIzq + paso * i + paso / 2,
+              y: alto - 8,
+              'text-anchor': esPrimero ? 'start' : esUltimo ? 'end' : 'middle',
+              fill: '#94a3b8',
+              'font-size': 12
+            });
+            t.textContent = puntos[i].corta;
+            svg.appendChild(t);
+          });
+
+          cont.appendChild(svg);
+        }
+
+        function pintarPaginas(paginas) {
+          var lista = $('lista-paginas');
+          lista.textContent = '';
+
+          var visibles = paginas
+            .filter(function (p) {
+              return p.visitas > 0;
+            })
+            .slice(0, 8);
+
+          if (!visibles.length) {
+            lista.appendChild(crear('li', 'vacio', 'Aún no hay páginas con visitas en este periodo.'));
+            return;
+          }
+
+          var maximo = visibles[0].visitas;
+          visibles.forEach(function (p) {
+            var fila = crear('li', 'pagina-fila');
+            var info = crear('div', 'pagina-info');
+            info.appendChild(crear('span', 'pagina-titulo', p.titulo || p.ruta));
+            info.appendChild(crear('span', 'pagina-ruta', p.ruta));
+            var barra = crear('div', 'tag-barra');
+            var relleno = document.createElement('span');
+            relleno.style.width = Math.round((p.visitas / maximo) * 100) + '%';
+            barra.appendChild(relleno);
+            fila.appendChild(info);
+            fila.appendChild(crear('span', 'tag-cuenta', numero(p.visitas)));
+            fila.appendChild(barra);
+            lista.appendChild(fila);
+          });
+        }
+
+        // ---------- Exportar CSV ----------
+        function celdaCSV(valor) {
+          var texto = String(valor == null ? '' : valor);
+          // Evita que Excel interprete el texto como una fórmula
+          if (/^[=+\-@\t\r]/.test(texto)) texto = "'" + texto;
+          return '"' + texto.replace(/"/g, '""') + '"';
+        }
+
+        function descargarCSV(nombre, filas) {
+          var texto = filas
+            .map(function (fila) {
+              return fila.map(celdaCSV).join(',');
+            })
+            .join('\r\n');
+          var blob = new Blob(['\uFEFF' + texto], { type: 'text/csv;charset=utf-8' });
+          var url = URL.createObjectURL(blob);
+          var enlace = document.createElement('a');
+          enlace.href = url;
+          enlace.download = nombre;
+          document.body.appendChild(enlace);
+          enlace.click();
+          enlace.remove();
+          setTimeout(function () {
+            URL.revokeObjectURL(url);
+          }, 1000);
+        }
+
+        function hoy() {
+          return new Date().toISOString().slice(0, 10);
+        }
+
+        $('btn-csv-dias').addEventListener('click', function () {
+          if (!ultimoDato) return;
+          var filas = [['Fecha', 'Visitas']].concat(
+            ultimoDato.actual.diario.map(function (x) {
+              return [x.dia, x.visitas];
+            })
+          );
+          descargarCSV('visitas-por-dia-' + ultimoDato.periodo + '-' + hoy() + '.csv', filas);
+        });
+
+        $('btn-csv-paginas').addEventListener('click', function () {
+          if (!ultimoDato) return;
+          var filas = [['Ruta', 'Título', 'Visitas']].concat(
+            ultimoDato.actual.paginas.map(function (p) {
+              return [p.ruta, p.titulo, p.visitas];
+            })
+          );
+          descargarCSV('visitas-por-pagina-' + ultimoDato.periodo + '-' + hoy() + '.csv', filas);
+        });
+
+        // ---------- Contenido del sitio ----------
+        function pedir(url) {
+          return fetch(url).then(function (r) {
+            if (!r.ok) throw new Error('Error ' + r.status);
+            return r.json();
+          });
+        }
+
+        function poner(id, valor) {
+          $(id).textContent = String(valor);
+        }
+
+        function cargarContenido() {
+          var estado = $('estado-contenido');
+
+          Promise.all([pedir('/api/stats'), pedir('/api/posts')])
+            .then(function (res) {
+              var m = (res[0] && res[0].metrics) || {};
+              var posts = ((res[1] && res[1].data) || []).slice();
+
+              posts.sort(function (a, b) {
+                return String(b.date).localeCompare(String(a.date));
+              });
+
+              poner('n-total', m.totalPosts != null ? m.totalPosts : posts.length);
+              poner('n-mini', m.miniProjects != null ? m.miniProjects : 0);
+              poner('n-problemas', m.problemsSolved != null ? m.problemsSolved : 0);
+              poner('n-tags', m.totalTags != null ? m.totalTags : 0);
+              poner('n-ultima', posts.length ? posts[0].date : '—');
+
+              var conteo = {};
+              posts.forEach(function (p) {
+                (p.tags || []).forEach(function (t) {
+                  conteo[t] = (conteo[t] || 0) + 1;
+                });
+              });
+              var top = Object.keys(conteo)
+                .map(function (t) {
+                  return { tag: t, n: conteo[t] };
+                })
+                .sort(function (a, b) {
+                  return b.n - a.n || a.tag.localeCompare(b.tag);
+                })
+                .slice(0, 8);
+
+              var listaTags = $('lista-tags');
+              if (top.length === 0) {
+                listaTags.appendChild(crear('li', 'vacio', 'Todavía no hay etiquetas.'));
+              } else {
+                var maximo = top[0].n;
+                top.forEach(function (item) {
+                  var fila = crear('li', 'tag-fila');
+                  var barra = crear('div', 'tag-barra');
+                  var relleno = document.createElement('span');
+                  relleno.style.width = Math.round((item.n / maximo) * 100) + '%';
+                  barra.appendChild(relleno);
+                  fila.appendChild(crear('span', 'tag-nombre', '#' + item.tag));
+                  fila.appendChild(barra);
+                  fila.appendChild(crear('span', 'tag-cuenta', item.n));
+                  listaTags.appendChild(fila);
+                });
+              }
+
+              var listaUltimas = $('lista-ultimas');
+              if (posts.length === 0) {
+                listaUltimas.appendChild(crear('li', 'vacio', 'Todavía no hay entradas.'));
+              } else {
+                posts.slice(0, 5).forEach(function (p) {
+                  var li = crear('li', 'entrada');
+                  var enlace = crear('a', '', p.title);
+                  enlace.href = '/blog/' + encodeURIComponent(p.slug);
+                  li.appendChild(enlace);
+                  li.appendChild(crear('small', '', p.category + ' · ' + p.date));
+                  listaUltimas.appendChild(li);
+                });
+              }
+
+              $('tarjetas').hidden = false;
+              $('detalle').hidden = false;
+              estado.textContent = 'Datos de tu sitio publicado.';
+            })
+            .catch(function () {
+              estado.textContent =
+                'No se pudieron cargar los datos del contenido. Revisa tu conexión y recarga la página.';
+            });
+        }
+
+        cargarVisitas();
+        cargarContenido();
       })();
     </script>
   </body>
