@@ -1,5 +1,26 @@
 @import "tailwindcss";
 
+/* Fondo del blog (compartido por la portada y las entradas) */
+body {
+  background-color: #050810;
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(0, 242, 254, 0.08) 0%, transparent 60%),
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 32px 32px, 32px 32px;
+}
+
+/* Cursor parpadeante del logo */
+.blink-cursor {
+  animation: blink 1s step-start infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
 /* Foco visible al navegar con teclado */
 a:focus-visible,
 button:focus-visible {
